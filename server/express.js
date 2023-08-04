@@ -1,5 +1,4 @@
 const http = require("http");
-const path = require("path");
 const express = require("express");
 const server = express();
 
@@ -12,10 +11,15 @@ const isInNodeModules = __dirname.includes("node_modules");
 const isNestedApp =
   isInNodeModules || (IS_NESTED_APP === "true" && NODE_ENV === "production");
 
-/* +++===PROJECT DIRECTORIES===+++ */
+/* +++===PATHS===+++ */
+const path = require("path");
 const APP_ROOT_DIR = path.join(
   __dirname,
-  isNestedApp ? "../../../../node_modules/@epleywebservices/mpc-scales" : "../"
+  isNestedApp
+    ? isProd
+      ? "../node_modules/@epleywebservices/mpc-scales"
+      : "../"
+    : "../"
 );
 
 console.log({
@@ -25,10 +29,12 @@ console.log({
 });
 
 /* +++===SECURITY===+++ */
-const helmet = require("helmet");
-server.use(helmet());
-server.use(helmet.xssFilter());
-server.enable("trust proxy"); // only if you're behind a proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+if (!isNestedApp) {
+  const helmet = require("helmet");
+  server.use(helmet());
+  server.use(helmet.xssFilter());
+  server.enable("trust proxy"); // only if you're behind a proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+}
 
 /* +++===CUSTOM SERVER LOGGING===+++ */
 require("./middleware/log-request-response-info")(isProd, server);
@@ -61,10 +67,14 @@ server.use(require("serve-favicon")(faviconPath));
 /* +++===DOWNLOADS===+++ */
 server.get("/download/*", (req, res) => {
   const relativeUrl = req?.params?.[0];
-  const filePath = `https://mpc-scales.s3.us-west-2.amazonaws.com/downloads/${relativeUrl}`;
+  const filePath = path.resolve(
+    APP_ROOT_DIR,
+    `./public/downloads/${relativeUrl}`
+  );
 
   res.download(filePath, null, (err) => {
     if (err) {
+      console.error(err);
       res.send({
         msg: `Problem downloading file: ${relativeUrl}`,
       });
