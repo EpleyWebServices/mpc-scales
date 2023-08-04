@@ -1,0 +1,86 @@
+/* STYLESHEET */
+#selectedScale {
+  display: inline;
+  font-size: 14px;
+  font-weight: bold;
+}
+#load-status {
+  margin: 2vmin 0vmin 0vmin 0vmin;
+  padding: 1vmin;
+  font-size:2vmin;
+}
+.load-status-light {
+  width: 1.5vmin;
+  height: 1.5vmin;
+  border: 1px solid grey;
+  margin: 0px;
+  padding: 0px;
+  cursor: default;
+  background-color: rgb(206, 0, 0);
+}
+button[class^="pad"] {
+  width: 15vmin;
+  height: 15vmin;
+  margin: 0vmax;
+  padding: 0vmax;
+  background-color: grey;
+  border-color: #363636;
+  font-size: 2.2vmin;
+}
+.banksTable {
+  border: none;
+  text-align: center;
+  background-color:#202020;
+  width: auto;
+  height: auto;
+}
+.banksTable td, .banksTable th {
+  border: none;
+  padding: 1vmin 1.3vmin 1vmin 1.3vmin;
+}
+.bnk-buttons {
+  width: 3.6vmin;
+  height: 1.8vmin;
+  background-color: #202020;
+  color: #030303;
+  border: 1px solid grey;
+  margin:0vmax;
+  padding:0vmax;
+}
+.banksText {
+  font-size: 2vmin;
+}
+.scaleName {
+  border:none;
+  text-align: right;
+  background-color:#202020;
+}
+td {
+  border:none;
+  background-color:#202020;
+  padding-bottom: 0.5vmax;
+  padding:0.35vmax;
+}
+a.cl, li.collapsiblelistopen, li.collapsiblelistclosed {
+  font-size: .9rem;
+  line-height: 1rem;
+  font-weight: normal;
+}
+li.collapsiblelistopen {
+  line-height: 16px;
+}
+#rootFolder {
+  font-size: 1.25rem;
+}
+#rootFolder > ul > li {
+  font-size: 1.1rem;
+  font-weight: bolder;
+}
+#rootFolder > ul > li li {
+  font-size:1rem;
+  font-weight: bold;
+}
+#rootFolder > ul > li li li {
+  font-size:.95rem;
+  font-weight: normal;
+}

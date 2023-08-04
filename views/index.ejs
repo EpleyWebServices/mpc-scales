@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>home | mpc-scales</title>
+  <%- include('./global/stylesheets'); %> <%- include('./global/scripts'); %>
+      <style>
+        .grid-img {
+          max-height: 36vh;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+          /* For mobile phones: */
+          .seq-text {
+            font-size: 28px;
+          }
+
+          .grid-img {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          #landing-message {
+            padding-bottom: 25px;
+          }
+        }
+      </style>
+      <script>
+        var images = [];
+        function preload() {
+          for (var i = 0; i < arguments.length; i++) {
+            images[i] = new Image();
+            images[i].src = preload.arguments[i];
+          }
+        }
+        preload(
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc60.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc3000.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000xl.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc4000.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2500.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc1000.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc5000.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc60_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc3000_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000xl_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc4000_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2500_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc1000_aqua.png",
+          "https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc5000_aqua.png",
+        );
+      </script>
+</head>
+
+<body style="overflow: hidden">
+  <div id="seq-info-bg">
+    <div id="seq-info-bg-gradient"></div>
+  </div>
+
+  <div class="grid-container">
+    <header class="header">
+      <%- include('partials/navbar'); %>
+        <h1>mpc-scales</h1>
+        <div id="landing-message" style="font-size: 1.75rem; float: left; padding: 1vh">
+          .pgm midi note files for legacy Akai MPC sequencers:
+        </div>
+        <div id="landing-message" style="font-size: 0.9rem; float: left; padding: 0.2vh; padding-left: 2rem;">
+          click a sequencer to goto the download page <i>(there is a single .zip file for all of these sequencers)</i>
+        </div>
+    </header>
+
+    <div class="seq">
+      <div class="grid-sub-container-seq">
+        <a class="seq1 seq-container" href="/download">
+          <div class="seq-text">MPC60</div>
+          <img id="MPC60" alt="MPC60" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc60_blank.png" />
+        </a>
+        <a class="seq2 seq-container" href="/download">
+          <div class="seq-text">MPC2000</div>
+          <img id="MPC2000" alt="MPC2000" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000_blank.png" />
+        </a>
+        <a class="seq3 seq-container" href="/download">
+          <div class="seq-text">MPC3000</div>
+          <img id="MPC3000" alt="MPC3000" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc3000_blank.png" />
+        </a>
+        <a class="seq4 seq-container" href="/download">
+          <div class="seq-text">MPC2000XL</div>
+          <img id="MPC2000XL" alt="MPC2000XL" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000xl_blank.png" />
+        </a>
+        <a class="seq5 seq-container" href="/download">
+          <div class="seq-text">MPC4000</div>
+          <img id="MPC4000" alt="MPC4000" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc4000_blank.png" />
+        </a>
+        <a class="seq6 seq-container" href="/download">
+          <div class="seq-text">MPC2500</div>
+          <img id="MPC2500" alt="MPC2500" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2500_blank.png" />
+        </a>
+        <a class="seq7 seq-container" href="/download">
+          <div class="seq-text">MPC1000</div>
+          <img id="MPC1000" alt="MPC1000" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc1000_blank.png" />
+        </a>
+        <a class="seq8 seq-container" href="/download">
+          <div class="seq-text">MPC5000</div>
+          <img id="MPC5000" alt="MPC5000" class="grid-img"
+            src="https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc5000_blank.png" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $("img.grid-img").mouseenter(function () {
+      $(this).prev().animate({ color: "aqua" }, 100);
+    });
+    $("img.grid-img").mouseleave(function () {
+      $(this).prev().animate({ color: "#228b22" }, 250);
+    });
+  </script>
+
+  <%- include('./partials/footer'); %>
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+/* STYLESHEET */
+.directory-area {
+  width: 30vw;
+  height: 74%;
+  resize: both;
+  overflow-y: scroll;
+  padding: 1vmax;
+  background-color: #111111;
+}
+.pads-area {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translateX(-50%) translateY(-50%);
+  width: max-content;
+  height: max-content;
+  z-index: 1;
+  padding:1vmax;
+  background-color: #111111;
+  text-align: center;
+}
+.chord-area { 
+  position: absolute;
+  top: 24vh;
+  left: 68vw;
+  width: max-content;
+  height: max-content;
+  z-index: 1;
+  padding: 1vmax;
+  background-color: #111111;
+}
+.seq-controls-area { 
+  position: absolute;
+  top: 60vh;
+  left: 68vw;
+  z-index: 1;
+  padding: 1vmax;
+  background-color: #111111;
+}
+.seq-controls-area button#record {
+  font-size: 2em;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.seq-controls-area button#stop {
+  font-size: 1.5em;
+  padding-top: 7px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.seq-controls-area button#play-pause {
+  font-size: 2em;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.seq-display {
+  z-index: 1;
+  margin: 0 auto;
+  margin-bottom: 0.5vmax;
+  padding: 0.25vmax;
+  background-color: rgb(14, 59, 14);
+  color: forestgreen;
+  border: 1px forestgreen solid;
+  max-width: max-content;
+}
+#display-notes-table th, #display-notes-table td {
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 1.75vmin;
+  min-width: 6.5vw;
+}
+#display-state-table {
+  border: none;
+}
+#display-state-table th, #display-state-table td {
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 2.5vmin;
+  min-width: 9vw;
+  border: none;
+}
+#display-state-table-lower th, #display-state-table-lower td {
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 2.5vmin;
+  min-width: 6.5vw;
+  border: none;
+}
+.display-section {
+  display:inline-block; 
+  border: 1px solid forestgreen;
+}
+div[id^="draggable"] {
+  cursor: move;
+}
+
+/*hidden chord buttons*/
+button[class^=bank] {
+  visibility:hidden;
+}
+
+/* grid-sub-containers */
+.grid-sub-container-pads {
+  display: grid;
+  height: max-content;
+  width: max-content;
+  grid-template-columns:  max-content max-content max-content max-content;
+  grid-template-rows: max-content
+                      max-content
+                      max-content
+                      max-content;
+  grid-column-gap: 0vw;
+  grid-row-gap: 0vh;
+  grid-template-areas:  "padA13 padA14 padA15 padA16"
+                        "padA09 padA10 padA11 padA12"
+                        "padA05 padA06 padA07 padA08"
+                        "padA01 padA02 padA03 padA04"
+
+                        "padB13 padB14 padB15 padB16"
+                        "padB09 padB10 padB11 padB12"
+                        "padB05 padB06 padB07 padB08"
+                        "padB01 padB02 padB03 padB04"
+                        
+                        "padC13 padC14 padC15 padC16"
+                        "padC09 padC10 padC11 padC12"
+                        "padC05 padC06 padC07 padC08"
+                        "padC01 padC02 padC03 padC04"
+                        
+                        "padD13 padD14 padD15 padD16"
+                        "padD09 padD10 padD11 padD12"
+                        "padD05 padD06 padD07 padD08"
+                        "padD01 padD02 padD03 padD04";
+}
+/* grid-contained classes for grid-areas */
+.padA01 { grid-area: padA01; }
+.padA02 { grid-area: padA02; }
+.padA03 { grid-area: padA03; }
+.padA04 { grid-area: padA04; }
+.padA05 { grid-area: padA05; }
+.padA06 { grid-area: padA06; }
+.padA07 { grid-area: padA07; }
+.padA08 { grid-area: padA08; }
+.padA09 { grid-area: padA09; }
+.padA10 { grid-area: padA10; }
+.padA11 { grid-area: padA11; }
+.padA12 { grid-area: padA12; }
+.padA13 { grid-area: padA13; }
+.padA14 { grid-area: padA14; }
+.padA15 { grid-area: padA15; }
+.padA16 { grid-area: padA16; }
+
+.padB01 { grid-area: padB01; }
+.padB02 { grid-area: padB02; }
+.padB03 { grid-area: padB03; }
+.padB04 { grid-area: padB04; }
+.padB05 { grid-area: padB05; }
+.padB06 { grid-area: padB06; }
+.padB07 { grid-area: padB07; }
+.padB08 { grid-area: padB08; }
+.padB09 { grid-area: padB09; }
+.padB10 { grid-area: padB10; }
+.padB11 { grid-area: padB11; }
+.padB12 { grid-area: padB12; }
+.padB13 { grid-area: padB13; }
+.padB14 { grid-area: padB14; }
+.padB15 { grid-area: padB15; }
+.padB16 { grid-area: padB16; }
+
+.padC01 { grid-area: padC01; }
+.padC02 { grid-area: padC02; }
+.padC03 { grid-area: padC03; }
+.padC04 { grid-area: padC04; }
+.padC05 { grid-area: padC05; }
+.padC06 { grid-area: padC06; }
+.padC07 { grid-area: padC07; }
+.padC08 { grid-area: padC08; }
+.padC09 { grid-area: padC09; }
+.padC10 { grid-area: padC10; }
+.padC11 { grid-area: padC11; }
+.padC12 { grid-area: padC12; }
+.padC13 { grid-area: padC13; }
+.padC14 { grid-area: padC14; }
+.padC15 { grid-area: padC15; }
+.padC16 { grid-area: padC16; }
+
+.padD01 { grid-area: padD01; }
+.padD02 { grid-area: padD02; }
+.padD03 { grid-area: padD03; }
+.padD04 { grid-area: padD04; }
+.padD05 { grid-area: padD05; }
+.padD06 { grid-area: padD06; }
+.padD07 { grid-area: padD07; }
+.padD08 { grid-area: padD08; }
+.padD09 { grid-area: padD09; }
+.padD10 { grid-area: padD10; }
+.padD11 { grid-area: padD11; }
+.padD12 { grid-area: padD12; }
+.padD13 { grid-area: padD13; }
+.padD14 { grid-area: padD14; }
+.padD15 { grid-area: padD15; }
+.padD16 { grid-area: padD16; }
+  
+/*cannot apply css grid spacing due to pads still having margins even when hidden with this approach*/
+button[class^="pad"] {
+  margin: 0.2vmax;
+  max-height: 14vw;
+  max-width: 14vw;
+}
+.seq-state-display {
+  margin: 0 auto;
+}
+.bpm-area { 
+  position: absolute;
+  top: 63vh;
+  left: 70vw;
+  z-index: 1;
+  padding: 1vmax;
+  background-color: #111111;
+}
+input[type=number] {
+  width: 5vmax;
+}
+/* HEIGHT & WIDTH ARE REVERSED DUE TO SLIDER ROTATION OF 270 DEGREES  */
+.slider {
+  position: relative;
+  left: -1.35vw;
+  -webkit-appearance: none;
+  width: 11vh !important;
+  height: 0.25vw;
+  border-radius: 5px;   
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  transform: rotate(270deg);
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2vmin;
+  height: 2vmin;
+  border-radius: 50%; 
+  background: forestgreen;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 2vmin;
+  height: 2vmin;
+  border-radius: 50%;
+  background: forestgreen;
+  cursor: pointer;
+}

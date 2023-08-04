@@ -1,0 +1,28 @@
+{
+  "name": "mpc-scales-website",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EpleyWebServices/mpc-scales.git"
+  },
+  "description": ".pgm midi note files for legacy Akai MPC sequencers",
+  "scripts": {
+    "dev": "set NODE_ENV=development&& nodemon ./server/express.js",
+    "prod": "set NODE_ENV=production&& nodemon ./server/express.js",
+    "start": "node ./server/express.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "detect-port": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-rate-limit": "^5.5.1",
+    "express-slow-down": "^1.6.0",
+    "helmet": "3.23.3",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

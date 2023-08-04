@@ -1,0 +1,88 @@
+<h1 style="margin-top: 20px;">scale player instructions</h1>
+<p>browse and load scales by using the scale explorer on the left-hand side of the screen. click on the scale to load it
+  into the sequencer.</p>
+<p>click pads or press the keys below to play pads:</p>
+<p><img style="display: block; height:150px; margin-left: auto; margin-right: auto;" src="/images/keyboard-figure.png"
+    alt="Play keys z, x, c, v, a, s, d, f, q, w, e, r, 1, 2, 3, 4..."></p>
+<p>change pad banks by clicking the bank letter above the pads.</p>
+<p>record a 4 measure loop by clicking the record button in the sequencer section (lower right-hand corner of the
+  screen). overwrite by clicking record and replaying the pads again.</p>
+<p>add additional tracks by clicking the arm button for the track you'd like to record notes to.</p>
+<p>adjust track volume by using the sliders or mute the track entirely by clicking the mute checkbox.</p>
+
+<div style="display: inline-block; padding-bottom: 50px; width: 100%;">
+  <a rel="modal:close"><button class="accept-DM" id="accept-DM-id"
+      onclick="setScalesInstructionsRead()">okay</button></a>
+</div>
+
+<script>
+  let SCALES_PLAYER_Cookie_2 = localStorage.getItem('SCALES_PLAYER_INSTRUCTIONS_READ')
+  if (typeof SCALES_PLAYER_Cookie_2 === "undefined") {
+    $("#SCALES_PLAYER_INSTRUCTIONS-modal-2").modal({
+      escapeClose: true,
+      clickClose: false,
+      showClose: true
+    });
+  }
+
+  function removeDMModal2() {
+    $("#SCALES_PLAYER_INSTRUCTIONS-modal-2").modal().remove()
+    $(".jquery-modal.blocker").remove()
+  }
+  function setScalesInstructionsRead() {
+    removeDMModal2()
+  }
+</script>
+
+<style>
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 h2 {
+    font-size: 2.25rem;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 h3 {
+    font-size: 1.25rem;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 #accept-DM-id {
+    position: absolute;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    height: 2.5rem;
+    background-color: forestgreen;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 #decline-DM {
+    float: left;
+    font-size: 2rem;
+    height: 2.5rem;
+    background-color: red;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-notify-modal #dismiss-DM-notify-btn {
+    float: right;
+    font-size: 1.5rem;
+    height: 2rem;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 p,
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 a {
+    font-size: 1rem;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 ol {
+    font-size: .85rem;
+    margin-left: 0px;
+
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 li {
+    font-size: .85rem;
+    margin-left: 10px;
+  }
+
+  div#SCALES_PLAYER_INSTRUCTIONS-modal-2 ol>li {
+    margin-left: 10px;
+  }
+</style>

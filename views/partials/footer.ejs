@@ -1,0 +1,84 @@
+<footer class="footer">
+  <a href="/">mpc-scales</a> by <a href="https://github.com/EpleyWebServices">ews</a>
+  <div id="cookies-modal" class="modal hide">
+    <%- include('modals/cookies-policy') %>
+  </div>
+</footer>
+
+<style>
+  #cookies-banner {
+    position: fixed;
+    font-size: 1.25rem;
+    background-color: rgb(9, 24, 9);
+    opacity: 0.9;
+    bottom: 3%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 95%;
+    margin: 0px;
+    border: 1px forestgreen solid;
+    border-radius: 3px;
+    z-index: 1;
+  }
+
+  .cookies-banner-text {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    display: inline-block;
+    opacity: 1;
+    font-size: 1.25rem;
+    margin: 10px 0 10px 0;
+  }
+
+  .hide {
+    visibility: hidden;
+    display: none;
+  }
+</style>
+
+<script defer>
+  let cookiesPolicyAccepted = localStorage.getItem("COOKIES_NOTICE");
+  if (
+    typeof cookiesPolicyAccepted === "undefined" ||
+    cookiesPolicyAccepted !== "true"
+  ) {
+    $("body").append(`
+      <div id="cookies-banner">
+        <div style="position: relative;">
+          <div class="cookies-banner-text">this site uses cookies.<br/>please read the <a rel="modal:open" href="#cookies-modal" onclick="openCookiesModal()">cookies policy</a> to learn more.
+            <button style="font-size: 1rem;" onclick="setCookieAccepted()">got it</button>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  function openCookiesModal() {
+    $("#cookies-modal").modal({
+      escapeClose: false,
+      showClose: false,
+      clickClose: false,
+      closeExisting: false,
+    });
+    $("#cookies-modal").removeClass("hide");
+  }
+
+  function removeCookiesModal() {
+    $("#cookies-modal").addClass("hide");
+  }
+
+  function slideDownCookiesBanner() {
+    $("#cookies-banner").fadeOut(100);
+  }
+
+  function removeCookiesBanner() {
+    $("#cookies-banner").remove();
+  }
+
+  function setCookieAccepted() {
+    localStorage.setItem("COOKIES_NOTICE", true);
+    removeCookiesModal();
+    slideDownCookiesBanner();
+  }
+</script>

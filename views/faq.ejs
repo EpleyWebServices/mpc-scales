@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>faq | mpc-scales</title>
+<%- include('./global/stylesheets'); %> <%- include('./global/scripts'); %>
+
+    <header class="header">
+      <%- include('partials/navbar'); %>
+        <h1>faq</h1>
+    </header>
+
+    <style>
+      h3 {
+        font-size: 1.75rem;
+        border-radius: 3px;
+      }
+
+      #div1,
+      #div2,
+      #div3,
+      #div4,
+      #div5,
+      #div5,
+      #div6,
+      #div7,
+      #div8,
+      #div9,
+      #div10,
+      #div12,
+      #div11 {
+        font-size: 1.1rem;
+        background: #111111;
+        border: 1px solid forestgreen !important;
+        padding: 10px;
+        margin: 10px;
+      }
+
+      #div1 div,
+      #div2 div,
+      #div3 div,
+      #div4 div,
+      #div5 div,
+      #div5 div,
+      #div6 div,
+      #div7 div,
+      #div8 div,
+      #div9 div,
+      #div10 div,
+      #div12 div,
+      #div11 div {
+        font-size: 1.1rem;
+        padding: 3px;
+      }
+
+      #div1 a,
+      #div2 a,
+      #div3 a,
+      #div4 a,
+      #div5 a,
+      #div5 a,
+      #div6 a,
+      #div7 a,
+      #div8 a,
+      #div9 a,
+      #div10 a,
+      #div12 a,
+      #div11 a {
+        font-size: 1.1rem;
+      }
+
+      .toggle {
+        color: aqua;
+        font-size: 1.25rem;
+        cursor: pointer;
+      }
+
+      #faq-container {
+        max-width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media only screen and (max-width: 768px) {
+
+        /* For mobile phones: */
+        #faq-container {
+          max-width: 95%;
+        }
+      }
+    </style>
+
+    <body>
+      <br />
+
+      <div id="faq-container">
+        <h3>mpc related</h3>
+        <ul style="list-style: none; padding: 10px">
+          <li>
+            <a class="toggle" id="showdiv10">
+              - what is the required hardware?
+            </a>
+            <div id="div10" style="display: none">
+              <div>
+                you must have an akai mpc drum machine with a 16-pad layout that
+                is compatible with the newer .pgm file format. unfortunately, i don't
+                know which mpcs can load this format, but they should work on anything newer than a 1000 (such as the
+                MPC Renaissance, Studio, Touch, Live, or X).
+              </div>
+              <div>
+                as you can read
+                <a href="https://www.mpc-samples.com/article/mpc-file-compatibility-1" target="_blank"
+                  rel="noopener noreferrer">here</a>, there's more than one .pgm file format. the files
+                on this site were generated using the MPC1000/2500 file format, but that doesn't necessarily mean they
+                won't
+                work on older MPCs.
+              </div>
+              <div>
+                you will also need a midi sound module to be able to receive midi
+                out messages from your mpc. the .pgm files DO NOT WORK WITH SAMPLE TUNING OR KEYGROUPS.
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a class="toggle" id="showdiv2">
+              - what if the files don't work on my mpc older mpc?!
+            </a>
+            <div id="div2" style="display: none">
+              <div>
+                the .pgm files may not work on machines prior to the MPC1000
+              </div>
+              <div>
+                as you can read
+                <a href="https://www.mpc-samples.com/article/mpc-file-compatibility-1" target="_blank"
+                  rel="noopener noreferrer">here</a>, there are some different versions of the .pgm file format and the
+                files on this site were generated using the
+                MPC1000/2500 .pgm file format as a starting template. i didn't have access to the other .pgm formats
+                when i created the files on this site.
+              </div>
+              <div>
+                perhaps someone with an older version of the .pgm file format for MPC60 or 3000 can send some to
+                me so I can try and generate the scales using this older format. find me on <a
+                  href="https://github.com/EpleyWebServices/mpc-scales-pack" target="_blank">github</a> if you can help
+                with this.
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <h3>scale programs (.pgm files)</h3>
+        <ul style="list-style: none; padding: 10px">
+          <li>
+            <a class="toggle" id="showdiv8">
+              - how do i install and load the files?
+            </a>
+            <div id="div8" style="display: none">
+              after downloading the files from this site and extracting the files from the zipped folder, follow the
+              instructions from your mpc manual for how to upload files
+              to your mpc's internal hard drive or a compact flash card. once you
+              have the scales pack on your mpc, you simply load the .pgm
+              scale file into the project and change the current track's program
+              to the desired scale and begin playing the pads. no matter which pad
+              you hit, you will always be in scale... no accidentals here!
+            </div>
+          </li>
+
+          <li>
+            <a class="toggle" id="showdiv7">
+              - what are the scales and how do i use them?
+            </a>
+            <div id="div7" style="display: none">
+              <div>
+                the scales are simply .pgm files with mapped midi note
+                assignments, ordered into musical scales.
+              </div>
+              <div>
+                they are intended to be used with an external midi sound module
+                connected to your mpc.
+              </div>
+              <div>
+                to use the programs, you just load and select the desired scale
+                file on the current track of the main sequencer. now, when you hit
+                the pads, the midi notes that are triggered will be in the desired
+                scale.
+              </div>
+              <div>
+                the scales can help discover and create chord progressions, sketch
+                out melodies, or add basslines in the scale of your samples. it's
+                also fun to improvise solos by hitting random pads to show off
+                your advanced knowledge of music theory ;)
+              </div>
+              <div>
+                follow the instructions from your mpc manual to connect your mpc
+                to an external midi device. then, download the scales from this
+                site and load 'em up to begin experimenting!
+              </div>
+              <div>
+                to see the scales in action, go to the
+                <a href="/scales/ENJOY!">scales player</a> to try them out in
+                real-time.
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a class="toggle" id="showdiv1">
+              - how are the scales organized?
+            </a>
+            <div id="div1" style="display: none">
+              <div>
+                the root folder contains numbered folders ("-2", "-1", "0", "1",
+                "2") which corresponds to the (midi) octave assigned to
+                <code>PAD A01</code> (i.e. the starting point for the ascending
+                scale).
+              </div>
+              <div>
+                the second-level folders are the different scale categories:
+                "All", "Chromatic", "Diminished", "Major", "Minor", and "Other".
+                both "Major" and "Minor" folders contain pentatonic and
+                non-pentatonic versions of each scale. in addition to the scales
+                for each rootnote, the "Major" folder also contains a
+                sub-directory for each rootnote for the various
+                <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Mode_(music)">modes</a>
+                of the scale. the "Other" folder contains over 100 various scales
+                from around the world.
+              </div>
+              <div>
+                the "All" folder (only included in the FULL version)
+                contains every unique 5 to 9 note scale pattern (including all
+                modes of each scale) within the 12-tone equally-tempered system of
+                music, including named scales (where applicable) which also are
+                listed in the "Other" folder for easier access. the "All" folder
+                is not shown on the
+                <a href="/scales/ENJOY!">scales player</a> page, because there
+                were too many files. : (
+              </div>
+              <div>
+                essentially, what you see on the
+                <a href="/scales/ENJOY!">scales player</a> page is the "0" folder
+                of the LITE version of the scales pack which doesn't include the
+                "All" scales folder.
+              </div>
+              <div>
+                please go to the <a href="/scales/ENJOY!">scales player</a> and
+                see the directory on the left side of the page to better
+                understand how the scales are organized.
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a class="toggle" id="showdiv11">
+              - how are the scales named? what do the numbers mean in the filename?
+            </a>
+            <div id="div11" style="display: none">
+              <div>lets use an example scale file: <b>-2G#5311Iwato.pgm</b></div>
+              <table style="margin-left: 25px; margin-top: 15px; margin-bottom: 15px">
+                <tbody>
+                  <tr>
+                    <th>-2</th>
+                    <td>
+                      Starting octave, assigned to PAD A01 (i.e. the first note of
+                      the ascending scale)
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>G#</th>
+                    <td>Rootnote</td>
+                  </tr>
+                  <tr>
+                    <th>5</th>
+                    <td>This is a 5 note scale. (always a single digit 5-9)</td>
+                  </tr>
+                  <tr>
+                    <th>31</th>
+                    <td>
+                      It is number 31 out of 66 unique 5 note scale patterns. (can
+                      be one or two digits)
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>1</th>
+                    <td>
+                      It is the 1st mode of the scale pattern. (always a single
+                      digit)
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Iwato</th>
+                    <td>
+                      The name of the scale is Iwato. (there are more than one
+                      name for many of the scales)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div>
+                scales in the "Chromatic", "Diminished", "Major", "Minor", and "Other" folders do not include the full
+                scale numbers in their name, for the sake of simplicity.
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a class="toggle" id="showdiv9">
+              - can the scales be used with samples or keygroups?
+            </a>
+            <div id="div9" style="display: none">
+              <div>
+                unfortunately, no. the scales are only able to trigger midi notes
+                in scale; not sample pitch or keygroups... :(
+              </div>
+              <div>
+                if someone has an idea of how to potentially do this, i'd love to
+                know about it.
+              </div>
+            </div>
+          </li>
+          <li>
+            <a class="toggle" id="showdiv12">
+              - why is there a _.WAV file in every scale folder?
+            </a>
+            <div id="div12" style="display: none">
+              <div>
+                each pad in a .pgm file needs a sample assigned. if the assigned
+                sample isn't loaded at the same time as the .pgm file, it will
+                cause issues...
+              </div>
+              <div>
+                the _.WAV file is an empty sample that is as small as possible and
+                doesn't make a sound.
+              </div>
+              <div>don't delete the file—it's necessary!</div>
+              <div>always save the _.WAV file with your project!</div>
+              <div>
+                and make sure you don't name any of your
+                project's samples "_.WAV" since the sample would trigger whenever a scale
+                pad plays.
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div style="height: 50px"></div>
+    </body>
+    <%- include('partials/footer') %>
+
+</html>
+
+<script type="text/javascript">
+  $(() => {
+    $("#showdiv1").click(() => {
+      $("div[id^=div]").hide();
+      $("#div1").show();
+      $("#showdiv1").css("color", "forestgreen");
+    });
+    $("#showdiv2").click(() => {
+      $("div[id^=div]").hide();
+      $("#div2").show();
+      $("#showdiv2").css("color", "forestgreen");
+    });
+    $("#showdiv3").click(() => {
+      $("div[id^=div]").hide();
+      $("#div3").show();
+      $("#showdiv3").css("color", "forestgreen");
+    });
+    $("#showdiv4").click(() => {
+      $("div[id^=div]").hide();
+      $("#div4").show();
+      $("#showdiv4").css("color", "forestgreen");
+    });
+    $("#showdiv5").click(() => {
+      $("div[id^=div]").hide();
+      $("#div5").show();
+      $("#showdiv5").css("color", "forestgreen");
+    });
+    $("#showdiv6").click(() => {
+      $("div[id^=div]").hide();
+      $("#div6").show();
+      $("#showdiv6").css("color", "forestgreen");
+    });
+    $("#showdiv7").click(() => {
+      $("div[id^=div]").hide();
+      $("#div7").show();
+      $("#showdiv7").css("color", "forestgreen");
+    });
+    $("#showdiv8").click(() => {
+      $("div[id^=div]").hide();
+      $("#div8").show();
+      $("#showdiv8").css("color", "forestgreen");
+    });
+    $("#showdiv9").click(() => {
+      $("div[id^=div]").hide();
+      $("#div9").show();
+      $("#showdiv9").css("color", "forestgreen");
+    });
+    $("#showdiv10").click(() => {
+      $("div[id^=div]").hide();
+      $("#div10").show();
+      $("#showdiv10").css("color", "forestgreen");
+    });
+    $("#showdiv11").click(() => {
+      $("div[id^=div]").hide();
+      $("#div11").show();
+      $("#showdiv11").css("color", "forestgreen");
+    });
+    $("#showdiv12").click(() => {
+      $("div[id^=div]").hide();
+      $("#div12").show();
+      $("#showdiv12").css("color", "forestgreen");
+    });
+  });
+</script>
+
+<style>
+  td {
+    text-align: left;
+    font-size: 0.9rem;
+  }
+</style>

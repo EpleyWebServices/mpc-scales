@@ -1,0 +1,91 @@
+<div id="notify-modal-mobile" class="modal" style="padding-bottom: 30px;">
+  <p style="font-size: 20px; font-weight: bold;">hey!</p>
+  <p>this website works much better on laptop/desktop browsers.</br></br>you can still try viewing the site on a mobile
+    device or tablet, but you will probably experience issues.</br>
+    <a href="#"><button style="padding-bottom: 40px;" id="dismiss-mobile-notify-btn" class="accept-DM"
+        onclick="removeMobileNotifyModal()">okay</button></a>
+</div>
+<script>
+  let MOBILECookie = localStorage.getItem('MOBILE_NOTIFICATION_ACCEPTED')
+  if (typeof MOBILECookie === "undefined" || MOBILECookie !== "true") {
+    if (window.mobileAndTabletCheck() === true) {
+      $("#notify-modal-mobile").modal({
+        escapeClose: false,
+        showClose: false,
+        clickClose: false,
+        closeExisting: false,
+        fadeDuration: 100
+      });
+    }
+  } else {
+    removeMOBILEModal()
+  }
+  function removeMobileNotifyModal() {
+    $("#notify-modal-mobile").remove()
+    $(".jquery-modal.blocker.current").remove()
+    $(".jquery-modal.blocker.behind").removeClass('behind').addClass('current')
+    setMOBILECookie()
+  }
+  function removeMOBILEModal() {
+    $("#mobile-notification-modal").modal().remove()
+    $(".jquery-modal.blocker").remove()
+  }
+  function setMOBILECookie() {
+    localStorage.setItem('MOBILE_NOTIFICATION_ACCEPTED', true)
+    removeMOBILEModal()
+  }
+</script>
+
+<style>
+  div#mobile-notification-modal h2 {
+    font-size: 2.25rem;
+  }
+
+  div#mobile-notification-modal h3 {
+    font-size: 1.25rem;
+  }
+
+  div#mobile-notification-modal #accept-DM {
+    float: right;
+    font-size: 2rem;
+    height: 2.5rem;
+    background-color: forestgreen;
+  }
+
+  div#mobile-notification-modal #decline-DM {
+    float: left;
+    font-size: 2rem;
+    height: 2.5rem;
+    background-color: red;
+  }
+
+  div#notify-modal-mobile #dismiss-mobile-notify-btn {
+    display: block;
+    height: 2rem;
+    font-size: 2rem;
+    height: 2.5rem;
+    background-color: forestgreen;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  div#mobile-notification-modal p,
+  div#mobile-notification-modal a {
+    font-size: .85rem;
+  }
+
+  div#mobile-notification-modal ol {
+    font-size: .85rem;
+    margin-left: 0px;
+
+  }
+
+  div#mobile-notification-modal li {
+    font-size: .85rem;
+    margin-left: 10px;
+  }
+
+  div#mobile-notification-modal ol>li {
+    margin-left: 10px;
+  }
+</style>

@@ -1,0 +1,1613 @@
+<html lang="en" style="overflow: hidden">
+<%- include('./global/stylesheets'); %>
+  <%- include('./global/scripts'); %>
+    <%- include('partials/audioSynth.js'); %>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>scales | mpc-scales</title>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+      <!--jQuery Modal-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+      <link rel="stylesheet" type="text/css" href="../css/scales_style.css" />
+      <link rel="stylesheet" type="text/css" href="../css/scales.css" />
+
+      <script>
+        window.scaleName = "A733";
+      </script>
+
+      <header class="header">
+        <%- include('partials/navbar') %>
+          <h1>scales</h1>
+      </header>
+
+      <body>
+        <button style="float: right; padding: 4px; margin: 5px; font-size: 16px" onclick="reopenInstructions()">
+          instructions
+        </button>
+        <div class="directory-area">
+          <%- include('partials/scale-tree') %>
+
+        </div>
+        <div class="pads-area">
+          <!--sequencer display-->
+          <div class="seq-display">
+            <!--bar & beat display-->
+            <table id="display-state-table">
+              <tr>
+                <td>
+                  <span style="float: left" id="display-bar">1</span><span style="float: left">.</span><span
+                    style="float: left" id="display-beat">1</span>
+                </td>
+                <td><span id="clicked-note-display"></span></td>
+                <td><span style="float: right" id="display-bpm">--</span></td>
+              </tr>
+            </table>
+
+            <!--note display table-->
+            <table id="display-notes-table">
+              <tr>
+                <th title="track1 notes">track 1</th>
+                <th title="track2 notes">track 2</th>
+                <th title="track3 notes">track 3</th>
+                <th title="track4 notes">track 4</th>
+              </tr>
+              <tr>
+                <td id="display-track1-notes">--</td>
+                <td id="display-track2-notes">--</td>
+                <td id="display-track3-notes">--</td>
+                <td id="display-track4-notes">--</td>
+              </tr>
+            </table>
+
+            <table id="display-state-table">
+              <tr>
+                <td><span id="selectedScale">maj_C_ionian</span></td>
+                <td><span id="display-armed-track">track 1 armed</span></td>
+                <td>
+                  <span style="float: right" id="display-play-pause-stop"></span><span style="float: right"
+                    id="display-record"></span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div id="pad-area-upper">
+            <table class="banksTable">
+              <tr>
+                <th class="banksText">BANK A</th>
+                <th class="banksText">BANK B</th>
+                <th class="banksText">BANK C</th>
+                <th class="banksText">BANK D</th>
+              </tr>
+              <tr>
+                <td><button class="bnk-buttons" id="bankA_button"></button></td>
+                <td><button class="bnk-buttons" id="bankB_button"></button></td>
+                <td>
+                  <button class="bnk-buttons" id="bankC_button" style="background-color: rgb(21, 114, 21)"></button>
+                </td>
+                <td><button class="bnk-buttons" id="bankD_button"></button></td>
+              </tr>
+            </table>
+          </div>
+          <div class="grid-sub-container-pads" id="ajax-content">
+            <%- include(scaleFilePath); %>
+          </div>
+        </div>
+
+        <div class="chord-area" id="draggable1">
+          <span style="font-size: 1.25em">chord examples</span>
+          <div>
+            <button onclick="playChord(selectedBankLetter, Major)">Major</button>
+            <button onclick="playChord(selectedBankLetter, Major7)">Major7</button>
+            <button onclick="playChord(selectedBankLetter, MajorAdd9)">MajorAdd9</button><br />
+            <button onclick="playChord(selectedBankLetter, Major9)">Major9</button>
+            <button onclick="playChord(selectedBankLetter, Major11)">Major11</button>
+            <button onclick="playChord(selectedBankLetter, Major13)">Major13</button><br />
+            <button onclick="playChord(selectedBankLetter, Sus2)">Sus2</button>
+            <button onclick="playChord(selectedBankLetter, Sus4)">Sus4</button>
+          </div>
+        </div>
+
+        <div class="seq-controls-area" id="draggable2">
+          <table>
+            <tr>
+              <th></th>
+              <th title="track 1">tr-1</th>
+              <th title="track 2">tr-2</th>
+              <th title="track 3">tr-3</th>
+              <th title="track 4">tr-4</th>
+              <th title="click track (metronome)">clk-tr</th>
+            </tr>
+            <tr>
+              <th style="height: 12vh">vol</th>
+              <td>
+                <div style="max-width: 1vw">
+                  <input class="slider" id="t1Slider" type="range" min="0" max="127" value="100" />
+                </div>
+              </td>
+              <td>
+                <div style="max-width: 1vw">
+                  <input class="slider" id="t2Slider" type="range" min="0" max="127" value="100" />
+                </div>
+              </td>
+              <td>
+                <div style="max-width: 1vw">
+                  <input class="slider" id="t3Slider" type="range" min="0" max="127" value="100" />
+                </div>
+              </td>
+              <td>
+                <div style="max-width: 1vw">
+                  <input class="slider" id="t4Slider" type="range" min="0" max="127" value="100" />
+                </div>
+              </td>
+              <td>
+                <div style="max-width: 1vw">
+                  <input class="slider" style="left: -0.75vw" id="metronomeSlider" type="range" min="0" max="127"
+                    value="100" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>mute</th>
+              <td>
+                <input id="mute-track1" type="checkbox" onclick="muteTrack1(event)" name="mute" />
+              </td>
+              <td>
+                <input id="mute-track2" type="checkbox" onclick="muteTrack2(event)" name="mute" />
+              </td>
+              <td>
+                <input id="mute-track3" type="checkbox" onclick="muteTrack3(event)" name="mute" />
+              </td>
+              <td>
+                <input id="mute-track4" type="checkbox" onclick="muteTrack4(event)" name="mute" />
+              </td>
+              <td>
+                <input id="mute-metronome" type="checkbox" onclick="muteMetronome()" name="mute" />
+              </td>
+            </tr>
+            <tr>
+              <th>arm</th>
+              <td><input onclick="armTrack1()" type="radio" name="arm" checked /></td>
+              <td><input onclick="armTrack2()" type="radio" name="arm" /></td>
+              <td><input onclick="armTrack3()" type="radio" name="arm" /></td>
+              <td><input onclick="armTrack4()" type="radio" name="arm" /></td>
+              <td></td>
+            </tr>
+          </table>
+          <br />
+
+          <div>
+            <button id="record" onclick="startRecording()">&#9679;</button>
+            <button id="stop" onclick="stopPlayback()">&#9724;</button>
+            <button id="play-pause" onclick="startPlayback()">&#9658;</button>
+            <label for="bpm-counter">bpm</label>
+            <input id="bpm-counter" type="number" min="30" max="300" value="120" />
+          </div>
+        </div>
+      </body>
+      <%- include('partials/footer') %>
+
+        <script>
+          "use strict";
+
+          //====================================================================================================================================
+          /*bank selection*/
+
+          const A = "A",
+            B = "B",
+            C = "C",
+            D = "D";
+
+          var selectedBankLetter = "B";
+          var selectedBankButtonId = "#bankB_button";
+          var currentPadClass = ".pad" + selectedBankLetter;
+          var currentBankClass = ".bank" + selectedBankLetter;
+
+          $("button[class^='padA']").hide();
+          $("button[class^='padB']").show();
+          $("button[class^='padC']").hide();
+          $("button[class^='padD']").hide();
+
+          // ALL FUNCTIONS WITHIN AJAX REQUEST MUST BE RELOADED WITH AJAX CALL LOAD CALLBACK???
+          $(document).ready(() => {
+            $("#bankA_button").click(() => {
+              updateBankVariables("A", "#bankA_button");
+              $("button[class^='padA']").show();
+              $("button[class^='padB']").hide();
+              $("button[class^='padC']").hide();
+              $("button[class^='padD']").hide();
+              $("#bankA_button").css({ "background-color": "rgb(21, 114, 21)" });
+              $("#bankB_button").css({ "background-color": "#202020" });
+              $("#bankC_button").css({ "background-color": "#202020" });
+              $("#bankD_button").css({ "background-color": "#202020" });
+            });
+            $("#bankB_button").click(() => {
+              updateBankVariables("B", "#bankB_button");
+              $("button[class^='padA']").hide();
+              $("button[class^='padB']").show();
+              $("button[class^='padC']").hide();
+              $("button[class^='padD']").hide();
+              $("#bankA_button").css({ "background-color": "#202020" });
+              $("#bankB_button").css({ "background-color": "rgb(21, 114, 21)" });
+              $("#bankC_button").css({ "background-color": "#202020" });
+              $("#bankD_button").css({ "background-color": "#202020" });
+            });
+            $("#bankC_button").click(() => {
+              updateBankVariables("C", "#bankC_button");
+              $("button[class^='padA']").hide();
+              $("button[class^='padB']").hide();
+              $("button[class^='padC']").show();
+              $("button[class^='padD']").hide();
+              $("#bankA_button").css({ "background-color": "#202020" });
+              $("#bankB_button").css({ "background-color": "#202020" });
+              $("#bankC_button").css({ "background-color": "rgb(21, 114, 21)" });
+              $("#bankD_button").css({ "background-color": "#202020" });
+            });
+            $("#bankD_button").click(() => {
+              updateBankVariables("D", "#bankD_button");
+              $("button[class^='padA']").hide();
+              $("button[class^='padB']").hide();
+              $("button[class^='padC']").hide();
+              $("button[class^='padD']").show();
+              $("#bankA_button").css({ "background-color": "#202020" });
+              $("#bankB_button").css({ "background-color": "#202020" });
+              $("#bankC_button").css({ "background-color": "#202020" });
+              $("#bankD_button").css({ "background-color": "rgb(21, 114, 21)" });
+            });
+          });
+
+          function updateBankVariables() {
+            selectedBankLetter = arguments[0];
+            selectedBankButtonId = arguments[1];
+            currentPadClass = ".pad" + selectedBankLetter;
+            currentBankClass = ".bank" + selectedBankLetter;
+          }
+
+          //====================================================================================================================================
+          /*pad click event delegation*/
+
+          $(document).ready(() => {
+            var isDown = false;
+            $(document).on("mousedown", function () {
+              isDown = true;
+            });
+            $(document).on("mouseup", function () {
+              isDown = false;
+            });
+
+            // pad click event delegation
+            let clickedPad;
+            let padArea = document.querySelector("#ajax-content");
+
+            padArea.onclick = function (event) {
+              let target = event.target; // where was the click?
+              if (target.tagName != "BUTTON") return; // not on BUTTON? Then we're not interested
+              animateAndRecordPads(target);
+            };
+
+            function animateAndRecordPads(clickedPad) {
+              let padClass = "." + clickedPad.className;
+              if (startTime < endTime && recordState === "record")
+                recordPads(padClass);
+              $(clickedPad)
+                .stop(true, true)
+                .animate({ opacity: "0.5" }, 25, () => {
+                  $(clickedPad).animate({ opacity: "1" }, "fast");
+                });
+              clickedNoteDisplay(padClass);
+            }
+
+            $(document).on("mouseover", "#ajax-content", function (event) {
+              if (isDown) {
+                let target = event.target;
+                if (target.tagName != "BUTTON") return;
+                let padOnclickFn = $(target).attr("onclick").replace("()", "");
+                animateAndRecordPads(target);
+                //setVolumeForClick(armStatus)
+                window[padOnclickFn]();
+              }
+            });
+          });
+
+          //====================================================================================================================================
+
+          /* sequencer loop variables */
+          const MS_PER_MINUTE = 60000;
+          var BPM = 120;
+
+          var BEATS = 4;
+          var BARS = 4;
+          var totalBEATS = BEATS * BARS; // 8
+
+          var msPerBEAT = MS_PER_MINUTE / BPM;
+          var msPerLOOP = msPerBEAT * totalBEATS;
+
+          // init to 120 - changes upon recording notes
+          var t1recordedBPM = 120,
+            t2recordedBPM = 120,
+            t3recordedBPM = 120,
+            t4recordedBPM = 120;
+
+          var t1BPMadj, t2BPMadj, t3BPMadj, t4BPMadj;
+
+          /*volume*/
+          var metronomeVolume = 80 / 127;
+          var currentTrackVolume = 100 / 127;
+
+          /*bpm functions*/
+          $("#bpm-counter").click(() => {
+            updateSequencerVariables();
+            document.getElementById("display-bpm").innerHTML = BPM + " bpm";
+          });
+          $("#bpm-counter").change(() => {
+            updateSequencerVariables();
+            document.getElementById("display-bpm").innerHTML = BPM + " bpm";
+          });
+
+          var updateSequencerVariables = function () {
+            BPM = parseInt(document.getElementById("bpm-counter").value, 10);
+            t1BPMadj = t1recordedBPM / BPM;
+            t2BPMadj = t2recordedBPM / BPM;
+            t3BPMadj = t3recordedBPM / BPM;
+            t4BPMadj = t4recordedBPM / BPM;
+            msPerBEAT = MS_PER_MINUTE / BPM;
+            msPerLOOP = msPerBEAT * totalBEATS;
+          };
+
+          var barCounter = 1,
+            beatCounter = 0;
+
+          function incrementBeatCountDisplay() {
+            beatCounter++;
+            if (beatCounter > BEATS) {
+              beatCounter = 1;
+              barCounter++;
+            }
+            if (barCounter > BARS) {
+              barCounter = 1;
+              beatCounter = 1;
+            }
+            paintBeatCountDisplay();
+          }
+
+          function paintBeatCountDisplay() {
+            document.getElementById("display-bar").innerHTML = barCounter;
+            document.getElementById("display-beat").innerHTML = beatCounter;
+          }
+
+          //====================================================================================================================================
+          /*temporary track notes: these are added to track notes upon stopping the sequence and pressing play a second time*/
+          var t1TempPulseArray = [],
+            t2TempPulseArray = [],
+            t3TempPulseArray = [],
+            t4TempPulseArray = [];
+          var t1TempPadArray = [],
+            t2TempPadArray = [],
+            t3TempPadArray = [],
+            t4TempPadArray = [];
+
+          /*track notes*/ //record LOWEST QUANTIZED NOTE pulse locations
+          var t1Pulse = [], t1Pad = [];
+          var t2Pulse = [], t2Pad = [];
+          var t3Pulse = [], t3Pad = [];
+          var t4Pulse = [], t4Pad = [];
+
+          var t1Counter = 0,
+            t2Counter = 0,
+            t3Counter = 0,
+            t4Counter = 0;
+          var t1NextNoteDelay = 0,
+            t2NextNoteDelay = 0,
+            t3NextNoteDelay = 0,
+            t4NextNoteDelay = 0;
+
+          /*init sequencer state*/
+          var playbackState = "stop";
+          var recordState = "";
+          /*init display*/
+          document.getElementById("display-bpm").innerHTML = BPM + " bpm";
+
+          //====================================================================================================================================
+          /*playback section*/
+
+          var metronomeMuted = false;
+          var metronomeCounter = 0;
+          var metronomeDelay;
+          var isLoopRunning = false;
+
+          function startPlayback() {
+            setPlayButtonToPaused();
+            if (recordState === "record" && isLoopRunning === false)
+              countInThenPlay();
+            else play();
+          }
+
+          function countInThenPlay() {
+            unmuteMetronome();
+            play_metrnonome_high(); // immediately play the high tick
+            for (let i = 1; i < BEATS; i++) {
+              setTimeout(() => { play_metrnonome_low() }, msPerBEAT * i); // set timeouts for low ticks
+            }
+            setTimeout(() => {
+              metronomeCounter = 0; // set timeouts for starting playback after count in finishes
+              clearAllTimeouts();
+              play();
+            }, msPerBEAT * BEATS);
+          }
+
+          function setMetronomeDelay() {
+            if (metronomeCounter === 0) metronomeDelay = 0;
+            if (metronomeCounter > 0) {
+              if (loopMSElapsed == 0) metronomeDelay = msPerBEAT;
+              else metronomeDelay = (loopMSElapsed % msPerBEAT) * msPerBEAT;
+            }
+          }
+
+          function loopMetronome() {
+            setMetronomeDelay();
+            setTimeout(() => {
+              if ((metronomeCounter / BEATS) % 1 === 0) play_metrnonome_high();
+              else play_metrnonome_low();
+              if (playbackState === "play") incrementBeatCountDisplay();
+              metronomeCounter++;
+              loopMetronome();
+            }, metronomeDelay);
+          }
+
+          // if playbackState is play then loop tracks and set timeout to loop again
+          function loopTracks() {
+            if (playbackState === "play") {
+              t1PlayNotes();
+              t2PlayNotes();
+              t3PlayNotes();
+              t4PlayNotes();
+              setTimeout(() => {
+                clearAllTimeouts();
+                resetCountersToZero();
+                play();
+              }, msPerLOOP - loopMSElapsed);
+            }
+            loopMSElapsed = 0;
+            secondaryloopMSElapsedHolder = 0;
+          }
+
+          function loopPlayback() {
+            resetTimersAndCounters();
+            generateLoopTimers();
+            loopTracks();
+            loopMetronome();
+          }
+
+          function copyTempArrays() {
+            // only if necessary do these functions copy contents of temp arrays to final playback arrays
+            t1CopyTempArrayToFinalTrack();
+            t2CopyTempArrayToFinalTrack();
+            t3CopyTempArrayToFinalTrack();
+            t4CopyTempArrayToFinalTrack();
+          }
+
+          function resumePlayback() {
+            playbackState = "play";
+            setPlayButtonToPaused();
+            setResumeLoopTimers();
+            setDelaysForNextNotesOnResume();
+            loopTracks();
+            loopMetronome();
+            paintDisplayPlay();
+          }
+
+          //====================================================================================================================================
+          /*individual tracks: playback helper functions*/
+
+          function t1PlayNotes() {
+            if (
+              0 <= t1Counter &&
+              t1Counter < t1Pulse.length &&
+              playbackState === "play"
+            ) {
+              // check if whether should play next note
+              t1SetNextNoteTimeoutDelay();
+              if (!isNaN(t1NextNoteDelay)) {
+                setTimeout(() => {
+                  let padClassEvent = t1Pad[t1Counter];
+                  if (!muteT1) playNote(padClassEvent, "1");
+                  t1Counter++;
+                  t1PlayNotes();
+                }, t1NextNoteDelay);
+              }
+            }
+            if (t1Counter === t1Pulse.length) t1Counter = -1;
+          }
+
+          function t1SetNextNoteTimeoutDelay() {
+            updateSequencerVariables(); // update BPMadj variable for setting the next note delay
+            if (loopMSElapsed === 0) {
+              // if there is a pause placeholder then the delay for the current note was already set
+              if (0 < t1Counter && t1Counter < t1Pulse.length) {
+                t1NextNoteDelay =
+                  (t1Pulse[t1Counter] - t1Pulse[t1Counter - 1]) * t1BPMadj;
+              } else {
+                t1NextNoteDelay = t1Pulse[0];
+              }
+            }
+          }
+
+          function t1CopyTempArrayToFinalTrack() {
+            // if there are any notes recorded to temp arrays, copy to final track arrays then delete the original
+            if (t1TempPulseArray.length > 0) {
+              stopPlayback(); // stopPlayback for a split second
+              t1Pulse = []; // empty final arrays
+              t1Pad = [];
+              t1Pad = t1TempPadArray.slice(0); // copy contents of temp arrays
+              t1Pulse = t1TempPulseArray.slice(0);
+              t1TempPulseArray = []; // empty temp arrays
+              t1TempPadArray = [];
+              t1recordedBPM = BPM; // store recorded BPM for adjusting final arrays during playback
+              play();
+            }
+          }
+
+          function playNote(padClassEvent, trackNumber) { // ".padB01", "1"
+            if (padClassEvent == undefined) return; // make sure note event was not undefined (i.e. that the end of the array hasn't been reached)
+            setPlaybackNoteVolume(trackNumber);
+            if (padClassEvent.length > 7) { // if greater than 7 chars, this means a chord was playedW
+              runChordPlaybackProcess(padClassEvent, trackNumber);
+            } else runNotePlaybackProcess(padClassEvent, trackNumber); //FIX THIS... NEED TO CREATE A PLAYBACK CHORD FUNCTION SEPARATE FROM CLICK EVENTS
+          }
+
+          function setPlaybackNoteVolume(trackNumber) {
+            // if no track number passed then volume will be based on current armed track volume
+            if (trackNumber) {
+              let armedTrackVolSlider = document.getElementById("t" + trackNumber + "Slider");
+              currentTrackVolume = parseInt(armedTrackVolSlider.value, 10) / 127;
+            } else setVolToArmedTrackVol();
+          }
+
+          function runChordPlaybackProcess(padClassEvent, trackNumber) {
+            let bankLetter = padClassEvent.substr(5, 1); // ex: "B"
+            let chordName = padClassEvent.substr(6); // ex: "Major7"
+            playChord(bankLetter, window[chordName], trackNumber); // window["string"] changes string to variable
+          }
+
+          function runNotePlaybackProcess(padClassEvent, trackNumber) {
+            let noteFn = $(padClassEvent).attr("onclick").replace("()", ""); // remove parenthesis from the onclick attribute so we can invoke the function attached to it
+            window[noteFn](); // invoke the onclick function w/out actually clicking
+            $(padClassEvent)
+              .stop(true, true)
+              .animate({ opacity: "0.5" }, 125, () => {
+                $(padClassEvent).animate({ opacity: "1" }, "fast");
+              });
+            noteTrackDisplay(padClassEvent, trackNumber);
+          }
+
+          //====================================================================================================================================
+          /*sequencer button functions*/
+
+          var playText = "&#9658;",
+            pauseText = "&#10073;&#10073;",
+            stopText = "&#9724;",
+            recordText = "&#9679;";
+
+          function resetCountersToZero() {
+            t1Counter = t2Counter = t3Counter = t4Counter = 0;
+            metronomeCounter = 0;
+            barCounter = 1;
+            beatCounter = 0;
+          }
+          function updatePauseBtnToPlay() {
+            $("#play-pause").attr("onclick", "startPlayback()");
+            document.getElementById("play-pause").innerHTML = playText;
+          }
+          function updatePauseBtnToResume() {
+            $("#play-pause").attr("onclick", "resumePlayback()");
+            document.getElementById("play-pause").innerHTML = playText;
+          }
+          function setPlayButtonToPaused() {
+            $("#play-pause").attr("onclick", "pausePlayback()");
+            document.getElementById("play-pause").innerHTML = pauseText;
+          }
+
+          /*update display*/
+          function paintDisplayPlay() {
+            document.getElementById("display-play-pause-stop").innerHTML = playText;
+          }
+          function paintDisplayPause() {
+            document.getElementById("display-play-pause-stop").innerHTML = pauseText;
+          }
+          function paintDisplayStop() {
+            document.getElementById("display-play-pause-stop").innerHTML = stopText;
+          }
+          function paintDisplayRecord() {
+            document.getElementById("display-record").innerHTML = recordText;
+            $("#record").attr("onclick", "stopRecording()");
+          }
+          function clearDisplayPlayPauseStop() {
+            document.getElementById("display-play-pause-stop").innerHTML = " ";
+          }
+          function clearDisplayRecord() {
+            document.getElementById("display-record").innerHTML = " ";
+            $("#record").attr("onclick", "startRecording()");
+          }
+          function clearDisplayStop() {
+            document.getElementById("display-play-pause-stop").innerHTML = " ";
+          }
+
+          function play() {
+            clearDisplayStop();
+            paintDisplayPlay();
+            setStateToPlay();
+            copyTempArrays();
+            loopPlayback();
+          }
+
+          function stopPlayback() {
+            if (recordState === "record") stopRecording();
+            setStateToStop();
+            resetTimersAndCounters();
+            paintBeatCountDisplay(); // call this after reseting the counters to zero
+            paintDisplayStop();
+          }
+
+          function pausePlayback() {
+            paintDisplayPause();
+            playbackState = "pause";
+            saveLoopTimers();
+            updatePauseBtnToResume();
+            clearAllTimeouts(); // but don't reset counters... not necessary
+          }
+          function startRecording() {
+            recordState = "record";
+            muteArmedTrack();
+            unmuteMetronome();
+            paintDisplayRecord();
+          }
+          function stopRecording() {
+            recordState = "";
+            muteMetronome();
+            unmuteArmedTrack();
+            clearDisplayRecord();
+          }
+
+          function setStateToPlay() {
+            playbackState = "play";
+            isLoopRunning = true;
+            setPlayButtonToPaused();
+          }
+          function setStateToStop() {
+            playbackState = "stop";
+            isLoopRunning = false;
+            updatePauseBtnToPlay(); // NOT resumePlayback()
+          }
+
+          function resetTimersAndCounters() {
+            clearAllTimeouts();
+            resetCountersToZero();
+          }
+
+          //====================================================================================================================================
+          /*recording pads helper functions*/
+
+          var padTime;
+
+          function recordPads(eventClass) {
+            padTime = Date.now() - startTime;
+            switch (armStatus) {
+              case "track 1 armed":
+                t1TempPadArray.push(eventClass);
+                t1TempPulseArray.push(padTime);
+                break;
+              case "track 2 armed":
+                t2TempPadArray.push(eventClass);
+                t2TempPulseArray.push(padTime);
+                break;
+              case "track 3 armed":
+                t3TempPadArray.push(eventClass);
+                t3TempPulseArray.push(padTime);
+                break;
+              case "track 4 armed":
+                t4TempPadArray.push(eventClass);
+                t4TempPulseArray.push(padTime);
+                break;
+              default:
+                t1TempPadArray.push(eventClass);
+                t1TempPulseArray.push(padTime);
+            }
+          }
+
+          //====================================================================================================================================
+          /*pause helper functions*/
+
+          // declare temporary pause placeholder vars
+          var loopMSElapsed = 0;
+          var secondaryloopMSElapsedHolder = 0;
+
+          var metronomePauseCounter;
+          var startTimeHolder;
+          var barPauseCounter;
+          var beatPauseCounter;
+
+          var t1PauseCounter, t2PauseCounter, t3PauseCounter, t4PauseCounter;
+
+          function saveLoopTimers() {
+            loopMSElapsed = secondaryloopMSElapsedHolder + getLoopTime();
+            secondaryloopMSElapsedHolder = loopMSElapsed;
+            t1PauseCounter = t1Counter;
+            t2PauseCounter = t2Counter;
+            t3PauseCounter = t3Counter;
+            t4PauseCounter = t4Counter;
+            barPauseCounter = barCounter;
+            beatPauseCounter = beatCounter;
+            metronomePauseCounter = metronomeCounter;
+          }
+
+          function setResumeLoopTimers() {
+            startTime = Date.now();
+            endTime = startTime + msPerLOOP - loopMSElapsed;
+          }
+
+          // set next note delays considering the time already elapsed into the loop
+          function setDelaysForNextNotesOnResume() {
+            t1NextNoteDelay = t1Pulse[t1PauseCounter] - loopMSElapsed;
+            t2NextNoteDelay = t2Pulse[t2PauseCounter] - loopMSElapsed;
+            t3NextNoteDelay = t3Pulse[t3PauseCounter] - loopMSElapsed;
+            t4NextNoteDelay = t4Pulse[t4PauseCounter] - loopMSElapsed;
+            barCounter = barPauseCounter;
+            beatCounter = beatPauseCounter;
+            metronomeCounter = metronomePauseCounter;
+          }
+
+          //====================================================================================================================================
+          /*misc*/
+
+          // run function given a fn name as a string and arguments as an array
+          function runFunction(fnName, args) {
+            var fn = window[fnName];
+            if (typeof fn !== "function") {
+              return;
+            } // if fn wasnt found then return
+            fn.apply(window, args);
+          }
+
+          //-------------------------------------------------------------------------------------------------------------------
+          // make elements draggable
+          dragElement(document.getElementById("draggable1"));
+          dragElement(document.getElementById("draggable2"));
+
+          function dragElement(elmnt) {
+            var pos1 = 0,
+              pos2 = 0,
+              pos3 = 0,
+              pos4 = 0;
+            if (document.getElementById(elmnt.id)) elmnt.onmousedown = dragMouseDown;
+            function dragMouseDown(e) {
+              e = e || window.event;
+              let eTarget = e.target;
+              if (eTarget.tagName != "DIV") return;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              document.onmouseup = closeDragElement;
+              document.onmousemove = elementDrag;
+            }
+            function elementDrag(e) {
+              e = e || window.event;
+              let eTarget = e.target;
+              if (eTarget.tagName != "DIV") return;
+              pos1 = pos3 - e.clientX;
+              pos2 = pos4 - e.clientY;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              elmnt.style.top = ((elmnt.offsetTop - pos2) / innerHeight) * 100 + "vh";
+              elmnt.style.left =
+                ((elmnt.offsetLeft - pos1) / innerWidth) * 100 + "vw";
+            }
+            function closeDragElement() {
+              document.onmouseup = null;
+              document.onmousemove = null;
+            }
+          }
+
+          //====================================================================================================================================
+          /*time functions*/
+          var startTime, endTime;
+          function generateLoopTimers() {
+            startTime = Date.now();
+            endTime = startTime + msPerLOOP;
+          }
+          function clearAllTimeouts() {
+            startTime = 0;
+            endTime = 0;
+            var id = window.setTimeout(null, 0);
+            while (id--) {
+              window.clearTimeout(id);
+            }
+          }
+
+          var loopMSElapsed;
+          function getLoopTime() {
+            return (loopMSElapsed = Date.now() - startTime);
+          }
+
+          //====================================================================================================================================
+          /*chords section*/
+
+          // chordArrays
+          var Major = ["Major", "01", "03", "05"];
+          var Major7 = ["Major7", "01", "03", "05", "07"];
+          var MajorAdd9 = ["MajorAdd9", "01", "03", "05", "09"];
+          var Major9 = ["Major9", "01", "03", "05", "07", "09"];
+          var Major11 = ["Major11", "01", "03", "05", "07", "09", "11"];
+          var Major13 = ["Major13", "01", "03", "05", "07", "09", "11", "13"];
+          var Sus2 = ["Sus2", "01", "02", "05"];
+          var Sus4 = ["Sus4", "01", "04", "05"];
+
+          function playChord(bankLetter, chordArray, trackNumber) {
+            let chordClassName = ".bank" + bankLetter + chordArray[0]; // ex: ".bankBMajor7"
+            if (recordState === "record" && playbackState === "play" && !trackNumber)
+              recordPads(chordClassName);
+            let onclickFn,
+              chordPadArray = [
+                ".pad" + bankLetter + chordArray[1],
+                ".pad" + bankLetter + chordArray[2],
+                ".pad" + bankLetter + chordArray[3],
+                ".pad" + bankLetter + chordArray[4],
+                ".pad" + bankLetter + chordArray[5],
+                ".pad" + bankLetter + chordArray[6],
+                ".pad" + bankLetter + chordArray[7],
+                ".pad" + bankLetter + chordArray[8],
+              ];
+            for (let i = 0; i < chordArray.length - 1; i++) {
+              if (typeof chordPadArray[i] == "undefined") return;
+              onclickFn = $(chordPadArray[i]).attr("onclick").replace("()", "");
+              setPlaybackNoteVolume(trackNumber);
+              window[onclickFn]();
+              $(chordPadArray[i])
+                .stop(true, true)
+                .animate({ opacity: "0.5" }, 125, () => {
+                  $(chordPadArray[i]).animate({ opacity: "1" }, "fast");
+                });
+            }
+            if (trackNumber) {
+              noteTrackDisplay(chordClassName, trackNumber); // track-specific display
+              return;
+            }
+            clickedNoteDisplay(chordClassName); // display current click if the playback was from user "click" event
+          }
+
+          //====================================================================================================================================
+          /*display*/
+
+          // for clicked notes
+          function clickedNoteDisplay(classWithNoteNameInnerHTML) {
+            let noteDisplay = document.querySelector(
+              classWithNoteNameInnerHTML
+            ).innerHTML; // store the note named at given pad location
+            document.getElementById("clicked-note-display").innerHTML = noteDisplay; // display note name
+          }
+
+          // for playback
+          function noteTrackDisplay(classWithNoteNameInnerHTML, trackNumber) {
+            let trackClassName = "display-track" + trackNumber + "-notes";
+            let noteToDisplay = document.querySelector(
+              classWithNoteNameInnerHTML
+            ).innerHTML; // store the note named at given pad location
+            document.getElementById(trackClassName).innerHTML = noteToDisplay; // display note name
+          }
+
+          //====================================================================================================================================
+          /*note audio functions*/
+
+          // var numberOfPadsLoaded = 0
+          // const NUMBER_OF_NOTES = 128
+          // var loadedPadArray = []
+
+          // function addOneToNumberOfPadsLoaded() {
+          //   numberOfPadsLoaded++
+          //   loadedPadArray.push(numberOfPadsLoaded)
+          //   if (loadedPadArray[NUMBER_OF_NOTES - 1] >= NUMBER_OF_NOTES - 1) {
+          //     $("#load-status").empty()
+          //     $("#load-status").append('LOAD STATUS <button class="load-status-light" style="background-color:rgb(21, 114, 21);"></button>')
+          //   }
+          // }
+
+          //====================================================================================================================================
+          /*mute tracks*/
+          //init to unmuted
+          var muteT1 = false,
+            muteT2 = false,
+            muteT3 = false,
+            muteT4 = false;
+
+          function muteTrack1() {
+            muteT1 = true;
+            document
+              .getElementById("mute-track1")
+              .setAttribute("onclick", "unmuteTrack1()");
+          }
+          function muteTrack2() {
+            muteT2 = true;
+            document
+              .getElementById("mute-track2")
+              .setAttribute("onclick", "unmuteTrack2()");
+          }
+          function muteTrack3() {
+            muteT3 = true;
+            document
+              .getElementById("mute-track3")
+              .setAttribute("onclick", "unmuteTrack3()");
+          }
+          function muteTrack4() {
+            muteT4 = true;
+            document
+              .getElementById("mute-track4")
+              .setAttribute("onclick", "unmuteTrack4()");
+          }
+
+          function unmuteTrack1() {
+            muteT1 = false;
+            document
+              .getElementById("mute-track1")
+              .setAttribute("onclick", "muteTrack1()");
+          }
+          function unmuteTrack2() {
+            muteT2 = false;
+            document
+              .getElementById("mute-track2")
+              .setAttribute("onclick", "muteTrack2()");
+          }
+          function unmuteTrack3() {
+            muteT3 = false;
+            document
+              .getElementById("mute-track3")
+              .setAttribute("onclick", "muteTrack3()");
+          }
+          function unmuteTrack4() {
+            muteT4 = false;
+            document
+              .getElementById("mute-track4")
+              .setAttribute("onclick", "muteTrack4()");
+          }
+
+          function muteArmedTrack() {
+            switch (armStatus) {
+              case "track 1 armed":
+                muteTrack1();
+                document.getElementById("mute-track1").checked = true;
+                break;
+              case "track 2 armed":
+                muteTrack2();
+                document.getElementById("mute-track2").checked = true;
+                break;
+              case "track 3 armed":
+                muteTrack3();
+                document.getElementById("mute-track3").checked = true;
+                break;
+              case "track 4 armed":
+                muteTrack4();
+                document.getElementById("mute-track4").checked = true;
+                break;
+              default:
+                muteTrack1();
+                document.getElementById("mute-track1").checked = true;
+            }
+          }
+
+          function unmuteArmedTrack() {
+            switch (armStatus) {
+              case "track 1 armed":
+                unmuteTrack1();
+                document.getElementById("mute-track1").checked = false;
+                break;
+              case "track 2 armed":
+                unmuteTrack2();
+                document.getElementById("mute-track2").checked = false;
+                break;
+              case "track 3 armed":
+                unmuteTrack3();
+                document.getElementById("mute-track3").checked = false;
+                break;
+              case "track 4 armed":
+                unmuteTrack4();
+                document.getElementById("mute-track4").checked = false;
+                break;
+              default:
+                unmuteTrack1();
+                document.getElementById("mute-track1").checked = false;
+            }
+          }
+
+          /*mute metronome*/
+          function muteMetronome() {
+            metronomeMuted = true;
+            $("#mute-metronome")
+              .attr("onclick", "unmuteMetronome()")
+              .prop("checked", true);
+          }
+          function unmuteMetronome() {
+            metronomeMuted = false;
+            $("#mute-metronome")
+              .attr("onclick", "muteMetronome()")
+              .prop("checked", false);
+          }
+
+          //====================================================================================================================================
+          /*arm tracks functions*/
+
+          var armStatus = "track 1 armed";
+
+          function paintDisplayArmStatus() {
+            document.querySelector("#display-armed-track").innerHTML = armStatus;
+          }
+          // init to "track 1 armed"
+          var armTrack1 = () => {
+            armStatus = "track 1 armed";
+            paintDisplayArmStatus();
+          };
+          function armTrack2() {
+            armStatus = "track 2 armed";
+            paintDisplayArmStatus();
+          }
+          function armTrack3() {
+            armStatus = "track 3 armed";
+            paintDisplayArmStatus();
+          }
+          function armTrack4() {
+            armStatus = "track 4 armed";
+            paintDisplayArmStatus();
+          }
+
+          //====================================================================================================================================
+          var metronomeSlider = document.getElementById("metronomeSlider");
+          var t1Slider = document.getElementById("t1Slider");
+          var t2Slider = document.getElementById("t2Slider");
+          var t3Slider = document.getElementById("t3Slider");
+          var t4Slider = document.getElementById("t4Slider");
+
+          // Update the current slider value (each time you drag the slider handle)
+          metronomeSlider.oninput = () => {
+            metronomeVolume = parseInt(metronomeSlider.value, 10) / 127;
+          };
+          t1Slider.oninput = () => {
+            setVolToArmedTrackVol();
+          };
+          t2Slider.oninput = () => {
+            setVolToArmedTrackVol();
+          };
+          t3Slider.oninput = () => {
+            setVolToArmedTrackVol();
+          };
+          t4Slider.oninput = () => {
+            setVolToArmedTrackVol();
+          };
+
+          function setVolToArmedTrackVol() {
+            switch (armStatus) {
+              case "track 1 armed":
+                currentTrackVolume = parseInt(t1Slider.value, 10) / 127;
+                break;
+              case "track 2 armed":
+                currentTrackVolume = parseInt(t2Slider.value, 10) / 127;
+                break;
+              case "track 3 armed":
+                currentTrackVolume = parseInt(t3Slider.value, 10) / 127;
+                break;
+              case "track 4 armed":
+                currentTrackVolume = parseInt(t4Slider.value, 10) / 127;
+                break;
+              default:
+                currentTrackVolume = parseInt(t1Slider.value, 10) / 127;
+            }
+          }
+
+          //====================================================================================================================================
+          /*metronome tick audio*/
+
+          function play_metrnonome_low() {
+            if (metronomeMuted === false) {
+              let audio_metronome_low = document.getElementById("metronome_low");
+              audio_metronome_low.currentTime = 0;
+              audio_metronome_low.volume = metronomeVolume;
+              audio_metronome_low.play();
+            }
+          }
+          function play_metrnonome_high() {
+            if (metronomeMuted === false) {
+              let audio_metronome_high = document.getElementById("metronome_high");
+              audio_metronome_high.currentTime = 0;
+              audio_metronome_high.volume = metronomeVolume;
+              audio_metronome_high.play();
+            }
+          }
+
+          //====================================================================================================================================
+          /*note audio*/
+
+          function playMidiNote(noteOctave, duration, volume) {
+            const note = noteOctave.slice(0, -1).toUpperCase();
+            const octave = noteOctave.slice(-1);
+            Synth.setVolume(volume);
+            Synth.play(0, note, octave, duration, volume);
+          }
+
+          const duration = 0.5;
+          const currentVolume = 1;
+
+          function play_note_024() { playMidiNote("C0", 1, duration, currentTrackVolume); }
+          function play_note_025() { playMidiNote("C#0", 1, duration, currentTrackVolume); }
+          function play_note_026() { playMidiNote("D0", 1, duration, currentTrackVolume); }
+          function play_note_027() { playMidiNote("D#0", 1, duration, currentTrackVolume); }
+          function play_note_028() { playMidiNote("E0", 1, duration, currentTrackVolume); }
+          function play_note_029() { playMidiNote("F0", 1, duration, currentTrackVolume); }
+          function play_note_030() { playMidiNote("F#0", 1, duration, currentTrackVolume); }
+          function play_note_031() { playMidiNote("G0", 1, duration, currentTrackVolume); }
+          function play_note_032() { playMidiNote("G#0", 1, duration, currentTrackVolume); }
+          function play_note_033() { playMidiNote("A0", 1, duration, currentTrackVolume); }
+          function play_note_034() { playMidiNote("A#0", 1, duration, currentTrackVolume); }
+          function play_note_035() { playMidiNote("B0", 1, duration, currentTrackVolume); }
+          function play_note_036() { playMidiNote("C1", 1, duration, currentTrackVolume); }
+          function play_note_037() { playMidiNote("C#1", 1, duration, currentTrackVolume); }
+          function play_note_038() { playMidiNote("D1", 1, duration, currentTrackVolume); }
+          function play_note_039() { playMidiNote("D#1", 1, duration, currentTrackVolume); }
+          function play_note_040() { playMidiNote("E1", 1, duration, currentTrackVolume); }
+          function play_note_041() { playMidiNote("F1", 1, duration, currentTrackVolume); }
+          function play_note_042() { playMidiNote("F#1", 1, duration, currentTrackVolume); }
+          function play_note_043() { playMidiNote("G1", 1, duration, currentTrackVolume); }
+          function play_note_044() { playMidiNote("G#1", 1, duration, currentTrackVolume); }
+          function play_note_045() { playMidiNote("A1", 1, duration, currentTrackVolume); }
+          function play_note_046() { playMidiNote("A#1", 1, duration, currentTrackVolume); }
+          function play_note_047() { playMidiNote("B1", 1, duration, currentTrackVolume); }
+          function play_note_048() { playMidiNote("C2", 1, duration, currentTrackVolume); }
+          function play_note_049() { playMidiNote("C#2", 1, duration, currentTrackVolume); }
+          function play_note_050() { playMidiNote("D2", 1, duration, currentTrackVolume); }
+          function play_note_051() { playMidiNote("D#2", 1, duration, currentTrackVolume); }
+          function play_note_052() { playMidiNote("E2", 1, duration, currentTrackVolume); }
+          function play_note_053() { playMidiNote("F2", 1, duration, currentTrackVolume); }
+          function play_note_054() { playMidiNote("F#2", 1, duration, currentTrackVolume); }
+          function play_note_055() { playMidiNote("G2", 1, duration, currentTrackVolume); }
+          function play_note_056() { playMidiNote("G#2", 1, duration, currentTrackVolume); }
+          function play_note_057() { playMidiNote("A2", 1, duration, currentTrackVolume); }
+          function play_note_058() { playMidiNote("A#2", 1, duration, currentTrackVolume); }
+          function play_note_059() { playMidiNote("B2", 1, duration, currentTrackVolume); }
+          function play_note_060() { playMidiNote("C3", 1, duration, currentTrackVolume); }
+          function play_note_061() { playMidiNote("C#3", 1, duration, currentTrackVolume); }
+          function play_note_062() { playMidiNote("D3", 1, duration, currentTrackVolume); }
+          function play_note_063() { playMidiNote("D#3", 1, duration, currentTrackVolume); }
+          function play_note_064() { playMidiNote("E3", 1, duration, currentTrackVolume); }
+          function play_note_065() { playMidiNote("F3", 1, duration, currentTrackVolume); }
+          function play_note_066() { playMidiNote("F#3", 1, duration, currentTrackVolume); }
+          function play_note_067() { playMidiNote("G3", 1, duration, currentTrackVolume); }
+          function play_note_068() { playMidiNote("G#3", 1, duration, currentTrackVolume); }
+          function play_note_069() { playMidiNote("A3", 1, duration, currentTrackVolume); }
+          function play_note_070() { playMidiNote("A#3", 1, duration, currentTrackVolume); }
+          function play_note_071() { playMidiNote("B3", 1, duration, currentTrackVolume); }
+          function play_note_072() { playMidiNote("C4", 1, duration, currentTrackVolume); }
+          function play_note_073() { playMidiNote("C#4", 1, duration, currentTrackVolume); }
+          function play_note_074() { playMidiNote("D4", 1, duration, currentTrackVolume); }
+          function play_note_075() { playMidiNote("D#4", 1, duration, currentTrackVolume); }
+          function play_note_076() { playMidiNote("E4", 1, duration, currentTrackVolume); }
+          function play_note_077() { playMidiNote("F4", 1, duration, currentTrackVolume); }
+          function play_note_078() { playMidiNote("F#4", 1, duration, currentTrackVolume); }
+          function play_note_079() { playMidiNote("G4", 1, duration, currentTrackVolume); }
+          function play_note_080() { playMidiNote("G#4", 1, duration, currentTrackVolume); }
+          function play_note_081() { playMidiNote("A4", 1, duration, currentTrackVolume); }
+          function play_note_082() { playMidiNote("A#4", 1, duration, currentTrackVolume); }
+          function play_note_083() { playMidiNote("B4", 1, duration, currentTrackVolume); }
+          function play_note_084() { playMidiNote("C5", 1, duration, currentTrackVolume); }
+          function play_note_085() { playMidiNote("C#5", 1, duration, currentTrackVolume); }
+          function play_note_086() { playMidiNote("D5", 1, duration, currentTrackVolume); }
+          function play_note_087() { playMidiNote("D#5", 1, duration, currentTrackVolume); }
+          function play_note_088() { playMidiNote("E5", 1, duration, currentTrackVolume); }
+          function play_note_089() { playMidiNote("F5", 1, duration, currentTrackVolume); }
+          function play_note_090() { playMidiNote("F#5", 1, duration, currentTrackVolume); }
+          function play_note_091() { playMidiNote("G5", 1, duration, currentTrackVolume); }
+          function play_note_092() { playMidiNote("G#5", 1, duration, currentTrackVolume); }
+          function play_note_093() { playMidiNote("A5", 1, duration, currentTrackVolume); }
+          function play_note_094() { playMidiNote("A#5", 1, duration, currentTrackVolume); }
+          function play_note_095() { playMidiNote("B5", 1, duration, currentTrackVolume); }
+          function play_note_096() { playMidiNote("C6", 1, duration, currentTrackVolume); }
+          function play_note_097() { playMidiNote("C#6", 1, duration, currentTrackVolume); }
+          function play_note_098() { playMidiNote("D6", 1, duration, currentTrackVolume); }
+          function play_note_099() { playMidiNote("D#6", 1, duration, currentTrackVolume); }
+          function play_note_100() { playMidiNote("E6", 1, duration, currentTrackVolume); }
+          function play_note_101() { playMidiNote("F6", 1, duration, currentTrackVolume); }
+          function play_note_102() { playMidiNote("F#6", 1, duration, currentTrackVolume); }
+          function play_note_103() { playMidiNote("G6", 1, duration, currentTrackVolume); }
+          function play_note_104() { playMidiNote("G#6", 1, duration, currentTrackVolume); }
+          function play_note_105() { playMidiNote("A6", 1, duration, currentTrackVolume); }
+          function play_note_106() { playMidiNote("A#6", 1, duration, currentTrackVolume); }
+          function play_note_107() { playMidiNote("B6", 1, duration, currentTrackVolume); }
+          function play_note_108() { playMidiNote("C7", 1, duration, currentTrackVolume); }
+          function play_note_109() { playMidiNote("C#7", 1, duration, currentTrackVolume); }
+          function play_note_110() { playMidiNote("D7", 1, duration, currentTrackVolume); }
+          function play_note_111() { playMidiNote("D#7", 1, duration, currentTrackVolume); }
+          function play_note_112() { playMidiNote("E7", 1, duration, currentTrackVolume); }
+          function play_note_113() { playMidiNote("F7", 1, duration, currentTrackVolume); }
+          function play_note_114() { playMidiNote("F#7", 1, duration, currentTrackVolume); }
+          function play_note_115() { playMidiNote("G7", 1, duration, currentTrackVolume); }
+          function play_note_116() { playMidiNote("G#7", 1, duration, currentTrackVolume); }
+          function play_note_117() { playMidiNote("A7", 1, duration, currentTrackVolume); }
+          function play_note_118() { playMidiNote("A#7", 1, duration, currentTrackVolume); }
+          function play_note_119() { playMidiNote("B7", 1, duration, currentTrackVolume); }
+          function play_note_120() { playMidiNote("C8", 1, duration, currentTrackVolume); }
+          function play_note_121() { playMidiNote("C#8", 1, duration, currentTrackVolume); }
+          function play_note_122() { playMidiNote("D8", 1, duration, currentTrackVolume); }
+          function play_note_123() { playMidiNote("D#8", 1, duration, currentTrackVolume); }
+          function play_note_124() { playMidiNote("E8", 1, duration, currentTrackVolume); }
+          function play_note_125() { playMidiNote("F8", 1, duration, currentTrackVolume); }
+          function play_note_126() { playMidiNote("F#8", 1, duration, currentTrackVolume); }
+          function play_note_127() { playMidiNote("G8", 1, duration, currentTrackVolume); }
+        </script>
+
+        <audio id="metronome_high" src="https://mpc-scales.s3.us-west-2.amazonaws.com/audio/metronome_high.mp3"></audio>
+        <audio id="metronome_low" src="https://mpc-scales.s3.us-west-2.amazonaws.com/audio/metronome_low.mp3"></audio>
+
+        <!--hidden chord buttons for playBack-->
+        <!--Major-->
+        <button class="bankAMajor" oclick="playChord(A, Major)">Maj(bankA)</button>
+        <button class="bankBMajor" onclick="playChord(B, Major)">Maj(bankB)</button>
+        <button class="bankCMajor" onclick="playChord(C, Major)">Maj(bankC)</button>
+        <button class="bankDMajor" onclick="playChord(D, Major)">Maj(bankD)</button>
+        <!--Major7-->
+        <button class="bankAMajor7" onclick="playChord(A, Major7)">Maj7(bankA)</button>
+        <button class="bankBMajor7" onclick="playChord(B, Major7)">Maj7(bankB)</button>
+        <button class="bankCMajor7" onclick="playChord(C, Major7)">Maj7(bankC)</button>
+        <button class="bankDMajor7" onclick="playChord(D, Major7)">Maj7(bankD)</button>
+        <!--Major9-->
+        <button class="bankAMajor9" onclick="playChord(A, Major9)">Maj9(bankA)</button>
+        <button class="bankBMajor9" onclick="playChord(B, Major9)">Maj9(bankB)</button>
+        <button class="bankCMajor9" onclick="playChord(C, Major9)">Maj9(bankC)</button>
+        <button class="bankDMajor9" onclick="playChord(D, Major9)">Maj9(bankD)</button>
+        <!--MajorAdd9-->
+        <button class="bankAMajorAdd9" onclick="playChord(A, MajorAdd9)">MajAdd9(bankA)</button>
+        <button class="bankBMajorAdd9" onclick="playChord(B, MajorAdd9)">MajAdd9(bankB)</button>
+        <button class="bankCMajorAdd9" onclick="playChord(C, MajorAdd9)">MajAdd9(bankC)</button>
+        <button class="bankDMajorAdd9" onclick="playChord(D, MajorAdd9)">MajAdd9(bankD)</button>
+        <!--Major11-->
+        <button class="bankAMajor11" onclick="playChord(A, Major11)">Maj11(bankA)</button>
+        <button class="bankBMajor11" onclick="playChord(B, Major11)">Maj11(bankB)</button>
+        <button class="bankCMajor11" onclick="playChord(C, Major11)">Maj11(bankC)</button>
+        <button class="bankDMajor11" onclick="playChord(D, Major11)">Maj11(bankD)</button>
+        <!--Major13-->
+        <button class="bankAMajor13" onclick="playChord(A, Major13)">Maj13(bankA)</button>
+        <button class="bankBMajor13" onclick="playChord(B, Major13)">Maj13(bankB)</button>
+        <button class="bankCMajor13" onclick="playChord(C, Major13)">Maj13(bankC)</button>
+        <button class="bankDMajor13" onclick="playChord(D, Major13)">Maj13(bankD)</button>
+        <!--Sus2-->
+        <button class="bankASus2" onclick="playChord(A, Sus2)">Sus2(bankA)</button>
+        <button class="bankBSus2" onclick="playChord(B, Sus2)">Sus2(bankB)</button>
+        <button class="bankCSus2" onclick="playChord(C, Sus2)">Sus2(bankC)</button>
+        <button class="bankDSus2" onclick="playChord(D, Sus2)">Sus2(bankD)</button>
+        <!--Sus4-->
+        <button class="bankASus4" onclick="playChord(A, Sus4)">Sus4(bankA)</button>
+        <button class="bankBSus4" onclick="playChord(B, Sus4)">Sus4(bankB)</button>
+        <button class="bankCSus4" onclick="playChord(C, Sus4)">Sus4(bankC)</button>
+        <button class="bankDSus4" onclick="playChord(D, Sus4)">Sus4(bankD)</button>
+
+        <html>
+        <script>
+          var numberOfPadsLoaded = 0;
+          const NUMBER_OF_NOTES = 128;
+          var loadedPadArray = [];
+
+          function addOneToNumberOfPadsLoaded() {
+            numberOfPadsLoaded++;
+            loadedPadArray.push(numberOfPadsLoaded);
+            if (loadedPadArray[NUMBER_OF_NOTES - 1] >= NUMBER_OF_NOTES - 1) {
+              $("#load-status").empty();
+              $("#load-status").append(
+                'LOAD STATUS <button class="load-status-light" style="background-color:rgb(21, 114, 21);"></button>'
+              );
+            }
+          }
+
+          /*TRACK 2*/
+          function t2PlayNotes() {
+            if (
+              0 <= t2Counter &&
+              t2Counter < t2Pulse.length &&
+              playbackState === "play"
+            ) {
+              // check if whether should play next note
+              t2SetNextNoteTimeoutDelay();
+              if (!isNaN(t2NextNoteDelay)) {
+                setTimeout(() => {
+                  let padClassEvent = t2Pad[t2Counter];
+                  if (!muteT2) playNote(padClassEvent, "2");
+                  t2Counter++;
+                  t2PlayNotes();
+                }, t2NextNoteDelay);
+              }
+            }
+            if (t2Counter === t2Pulse.length) t2Counter = -1;
+          }
+          function t2SetNextNoteTimeoutDelay() {
+            updateSequencerVariables(); // update BPMadj variable for setting the next note delay
+            if (loopMSElapsed === 0) {
+              // if there is a pause placeholder then the delay for the current note was already set
+              if (0 < t2Counter && t2Counter < t2Pulse.length) {
+                t2NextNoteDelay =
+                  (t2Pulse[t2Counter] - t2Pulse[t2Counter - 1]) * t2BPMadj;
+              } else {
+                t2NextNoteDelay = t2Pulse[0];
+              }
+            }
+          }
+          function t2CopyTempArrayToFinalTrack() {
+            // if there are any notes recorded to temp arrays, copy to final track arrays then delete the original
+            if (t2TempPulseArray.length > 0) {
+              stopPlayback(); // stopPlayback for a split second
+              t2Pulse = []; // empty final arrays
+              t2Pad = [];
+              t2Pad = t2TempPadArray.slice(0); // copy contents of temp arrays
+              t2Pulse = t2TempPulseArray.slice(0);
+              t2TempPulseArray = []; // empty temp arrays
+              t2TempPadArray = [];
+              t2recordedBPM = BPM; // store recorded BPM for adjusting final arrays during playback
+              play();
+            }
+          }
+
+          /*TRACK 3*/
+          function t3PlayNotes() {
+            if (
+              0 <= t3Counter &&
+              t3Counter < t3Pulse.length &&
+              playbackState === "play"
+            ) {
+              // check if whether should play next note
+              t3SetNextNoteTimeoutDelay();
+              if (!isNaN(t3NextNoteDelay)) {
+                setTimeout(() => {
+                  let padClassEvent = t3Pad[t3Counter];
+                  if (!muteT3) playNote(padClassEvent, "3");
+                  t3Counter++;
+                  t3PlayNotes();
+                }, t3NextNoteDelay);
+              }
+            }
+            if (t3Counter === t3Pulse.length) t3Counter = -1;
+          }
+          function t3SetNextNoteTimeoutDelay() {
+            updateSequencerVariables(); // update BPMadj variable for setting the next note delay
+            if (loopMSElapsed === 0) {
+              // if there is a pause placeholder then the delay for the current note was already set
+              if (0 < t3Counter && t3Counter < t3Pulse.length) {
+                t3NextNoteDelay =
+                  (t3Pulse[t3Counter] - t3Pulse[t3Counter - 1]) * t3BPMadj;
+              } else {
+                t3NextNoteDelay = t3Pulse[0];
+              }
+            }
+          }
+          function t3CopyTempArrayToFinalTrack() {
+            // if there are any notes recorded to temp arrays, copy to final track arrays then delete the original
+            if (t3TempPulseArray.length > 0) {
+              stopPlayback(); // stopPlayback for a split second
+              t3Pulse = []; // empty final arrays
+              t3Pad = [];
+              t3Pad = t3TempPadArray.slice(0); // copy contents of temp arrays
+              t3Pulse = t3TempPulseArray.slice(0);
+              t3TempPulseArray = []; // empty temp arrays
+              t3TempPadArray = [];
+              t3recordedBPM = BPM; // store recorded BPM for adjusting final arrays during playback
+              play();
+            }
+          }
+
+          /*TRACK 4*/
+          function t4PlayNotes() {
+            if (
+              0 <= t4Counter &&
+              t4Counter < t4Pulse.length &&
+              playbackState === "play"
+            ) {
+              // check if whether should play next note
+              t4SetNextNoteTimeoutDelay();
+              if (!isNaN(t4NextNoteDelay)) {
+                setTimeout(() => {
+                  let padClassEvent = t4Pad[t4Counter];
+                  if (!muteT4) playNote(padClassEvent, "4");
+                  t4Counter++;
+                  t4PlayNotes();
+                }, t4NextNoteDelay);
+              }
+            }
+            if (t4Counter === t4Pulse.length) t4Counter = -1;
+          }
+          function t4SetNextNoteTimeoutDelay() {
+            updateSequencerVariables(); // update BPMadj variable for setting the next note delay
+            if (loopMSElapsed === 0) {
+              // if there is a pause placeholder then the delay for the current note was already set
+              if (0 < t4Counter && t4Counter < t4Pulse.length) {
+                t4NextNoteDelay =
+                  (t4Pulse[t4Counter] - t4Pulse[t4Counter - 1]) * t4BPMadj;
+              } else {
+                t4NextNoteDelay = t4Pulse[0];
+              }
+            }
+          }
+          function t4CopyTempArrayToFinalTrack() {
+            // if there are any notes recorded to temp arrays, copy to final track arrays then delete the original
+            if (t4TempPulseArray.length > 0) {
+              stopPlayback(); // stopPlayback for a split second
+              t4Pulse = []; // empty final arrays
+              t4Pad = [];
+              t4Pad = t4TempPadArray.slice(0); // copy contents of temp arrays
+              t4Pulse = t4TempPulseArray.slice(0);
+              t4TempPulseArray = []; // empty temp arrays
+              t4TempPadArray = [];
+              t4recordedBPM = BPM; // store recorded BPM for adjusting final arrays during playback
+              play();
+            }
+          }
+
+          $(".otherScales").trigger("click"); // open the "Other" scales folder on load
+          document.getElementById("selectedScale").innerHTML =
+            window.location.pathname
+              .replace("/scales/", "")
+              .replace("%23", "#")
+              .replace(".pgm", ""); // set the name of the scale in display
+
+          function animateAndRecordPadsForKeypress(clickedPadClass) {
+            if (startTime < endTime && recordState === "record")
+              recordPads("." + clickedPadClass);
+            $("." + clickedPadClass)
+              .stop(true, true)
+              .animate({ opacity: "0.5" }, 25, () => {
+                $("." + clickedPadClass).animate({ opacity: "1" }, "fast");
+              });
+            clickedNoteDisplay("." + clickedPadClass);
+          }
+
+          window.addEventListener(
+            "keypress",
+            (e) => {
+              var key = e.key;
+              let onClickFunc = "";
+              let padClass;
+              switch (key) {
+                case "z":
+                case "Z":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}01`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "x":
+                case "X":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}02`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "c":
+                case "C":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}03`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "v":
+                case "V":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}04`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "a":
+                case "A":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}05`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "s":
+                case "S":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}06`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "d":
+                case "D":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}07`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "f":
+                case "F":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}08`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "q":
+                case "Q":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}09`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "w":
+                case "W":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}10`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "e":
+                case "E":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}11`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "r":
+                case "R":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}12`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "1":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}13`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "2":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}14`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "3":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}15`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+                case "4":
+                  padClass = `pad${selectedBankLetter.toLowerCase()}16`;
+                  onClickFunction = $("." + padClass)
+                    .attr("onclick")
+                    .replace("()", "");
+                  animateAndRecordPadsForKeypress(padClass);
+                  break;
+              }
+              window[onClickFunction]();
+            },
+            false
+          );
+        </script>
+
+        <div id="SCALES_PLAYER_INSTRUCTIONS-modal" class="modal">
+          <%- include('partials/modals/scales-player-instructions') %>
+        </div>
+        <div id="SCALES_PLAYER_INSTRUCTIONS-modal-2" class="modal">
+          <%- include('partials/modals/scales-player-instructions-2') %>
+        </div>
+
+        </html>
+
+</html>

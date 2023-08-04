@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow:auto;">
+<%- include('./global/stylesheets'); %> <%- include('./global/scripts'); %>
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+      </script>
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <style>
+      .info {
+        z-index: 0;
+        font-size: 1.25rem;
+        padding: 0;
+        margin: auto;
+        margin-left: 5vh;
+        pointer-events: auto;
+      }
+
+      a.cl {
+        font-size: .9rem;
+      }
+
+      form {
+        margin: 0px;
+      }
+
+      .horizontal-centered {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+
+      @media only screen and (max-width: 768px) {
+
+        /* For mobile phones: */
+        .horizontal-centered {
+          position: relative !important;
+          padding: 5px !important;
+          overflow-x: scroll !important;
+          margin-bottom: 50px;
+        }
+
+        td,
+        th {
+          font-size: 9px !important;
+        }
+
+        p {
+          font-size: 18px !important;
+        }
+
+        #release-date {
+          visibility: hidden;
+          display: none;
+        }
+      }
+    </style>
+
+    <header>
+      <title>download | mpc-scales</title>
+      <%- include('partials/navbar'); %>
+        <h1 onclick="location.href='/'" style="cursor: pointer;">download</h1>
+    </header>
+
+    <body>
+      <div class="horizontal-centered">
+        <p style="font-size: 24px; font-weight: bolder;">available midi scale packs</p>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">version</th>
+              <th rowspan="2">secure download link 🔒</th>
+              <th colspan="2">file size</th>
+              <th rowspan="2">.pgm count</th>
+            </tr>
+            <tr>
+              <th>zipped</th>
+              <th>unzipped</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>&nbsp;LITE_v1.0*&nbsp;</td>
+              <td><a style="font-size: 24px; cursor: pointer;" href="/downloads/MPC_SCALES_LITE_v1.0.zip"
+                  rel="noopener noreferrer"><u>MPC_SCALES_LITE_v1.0.zip</u>
+                </a></td>
+              <td>9 MB</td>
+              <td>133 MB</td>
+              <td>12,961</td>
+            </tr>
+            <td>FULL_v1.0**</td>
+            <td><a style="font-size: 24px; cursor: pointer;" href="/downloads/MPC_SCALES_FULL_v1.0.zip"
+                rel="noopener noreferrer"><u>MPC_SCALES_FULL_v1.0.zip</u>
+              </a></td>
+            <td>83 MB</td>
+            <td>1.31 GB</td>
+            <td>131,161</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:.9rem; font-style:italic;">the above midi scale packs include small .pgm and .WAV files.
+          there are
+          <u>ZERO</u> executables included in these packages. the packs are the exact same for every drum machine. DO
+          NOT trust any other
+          download links from other websites.
+        </p>
+        <p style="font-size:.9rem; font-style:italic;">* LITE version contains all <u>named</u> scales (as shown on
+          the <a href="/scales/ENJOY!">scale player</a> file explorer) and is recommended for most users. the only
+          difference between the LITE and FULL version
+          is that the LITE version doesn't include the "All" folder.
+        </p>
+        <p style="font-size:.9rem; font-style:italic;">** FULL version is very large (1.31 GB compressed
+          to 83 MB) and contains every possible 5 to 9 note scale (with mode shifts)
+          within the 12-tone equally-tempered system of music, organized into 12,000 nested subdirectories and over
+          140,000 files, so extracting this package is <b>very</b> time-consuming. for example, the default Windows OS
+          file extractor
+          may take many hours to finish running. if you encounter this problem, please consider downloading 3rd party
+          software, such as
+          <a href="https://www.7-zip.org/">7-Zip</a> which should do the job in a matter of minutes.
+        </p>
+        <p style="font-size:.9rem; font-style:italic;">after you download and extract the files, you simply need to
+          upload them to your mpc's internal hard drive or a compact flash card and you'll be ready to go!</p>
+        <p style="font-size:.9rem; font-style:italic;">please see the <a href="/faq">FAQ</a> for any further questions.
+        </p>
+      </div>
+
+      <%- include('partials/footer') %>
+
+    </body>
+    <html>

@@ -1,0 +1,586 @@
+/* STYLESHEET */
+/*disable scrolling on body and html of all pages*/
+html,
+body {
+  margin: 0;
+  /* height: 100%; */
+  /* overflow: hidden; */
+}
+body {
+  background: black;
+  color: forestgreen;
+  font-family: monospace;
+}
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 1.1vmax;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #202020;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 139, 34, 0.274);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 139, 34, 0.397);
+}
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  height: 1.1vmax;
+  display: block;
+  background: rgba(34, 139, 34, 0.274);
+}
+p {
+  font-size: 1.1rem;
+}
+pre {
+  font-size: 1.1rem;
+}
+a {
+  font-size: 1.1rem;
+}
+.seq-container {
+  position: relative;
+}
+.seq-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.993);
+  padding: 20px;
+  border-radius: 3px;
+  font-size: 28px;
+  color: forestgreen;
+}
+#MPC60 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc60.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC60:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc60_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC2000 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC2000:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC3000 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc3000.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC3000:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc3000_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC2000XL {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000xl.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC2000XL:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2000xl_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC4000 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc4000.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC4000:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc4000_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC2500 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2500.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC2500:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc2500_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC1000 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc1000.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC1000:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc1000_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+#MPC5000 {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc5000.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.5s; /* Safari */
+  transition: background-color 0.5s;
+}
+#MPC5000:hover {
+  background: url("https://mpc-scales.s3-us-west-2.amazonaws.com/sequencers/mpc5000_aqua.png")
+    no-repeat;
+  background-size: contain;
+  -webkit-transition: background-color 0.1s; /* Safari */
+  transition: background-color 0.1s;
+}
+
+#success {
+  padding: 15px;
+  margin: 15px;
+  background-color: rgba(0, 255, 13, 0.349);
+  color: aqua;
+}
+#cancel {
+  padding: 15px;
+  margin: 15px;
+  background-color: rgba(225, 0, 255, 0.349);
+  color: aqua;
+}
+#error {
+  padding: 0px;
+  margin: 0px;
+  color: aqua;
+}
+#info {
+  padding: 0px;
+  margin: 0px;
+  display: none;
+  color: blue;
+}
+h1 {
+  font-family: monospace;
+  font-size: 2rem;
+  color: aqua;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(34, 139, 34, 0.3),
+    black
+  );
+  background-size: auto;
+}
+h2 {
+  font-family: monospace;
+  font-size: 1.75rem;
+  color: forestgreen;
+  padding: 0.5vh;
+  margin-top: 0.5vh;
+  margin-bottom: 0vh;
+  background-size: auto;
+}
+h3 {
+  background: #202020;
+  font-family: monospace;
+  font-size: 1.5rem;
+  padding: 3px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+}
+h4 {
+  background: url("/public/images/backgrounds/17.jpeg");
+  font-family: monospace;
+  padding: 3px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+  font-size: 1.75rem;
+}
+ul {
+  margin: 0.1vmax;
+  padding: 0.1vmax;
+}
+.navbar {
+  background-image: linear-gradient(
+    to right,
+    rgba(34, 139, 34, 0.3),
+    rgba(34, 139, 34, 0.15)
+  );
+  margin: 0;
+  padding: 3px;
+}
+ul.navbar {
+  font-size: 1.25vmax;
+}
+li.navbar {
+  font-size: 1.25vmax;
+}
+ul#menu li {
+  display: inline;
+  padding: 0vmax;
+  vertical-align: text-bottom;
+}
+button {
+  background-color: purple;
+  font-family: monospace;
+  color: aqua;
+  font-size: 1.1em;
+  font-style: bold;
+  border-color: aqua;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.chord-area button {
+  font-size: 1.25em;
+}
+*:focus {
+  outline: none !important;
+}
+small {
+  color: forestgreen;
+  font-family: monospace;
+}
+label {
+  color: forestgreen;
+  font-size: 16px;
+  font-family: monospace;
+}
+select {
+  font-family: monospace;
+  color: forestgreen;
+  background-color: #111111;
+  border-collapse: collapse;
+  border: 1px solid forestgreen;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  cursor: pointer;
+}
+select:hover {
+  border: 1px solid forestgreen;
+}
+select option:checked {
+  font-weight: bold;
+  color: aqua;
+  background-color: purple;
+}
+table {
+  font-family: monospace;
+  color: forestgreen;
+  background-color: #1111111c;
+  border-collapse: collapse;
+  border: 1px solid forestgreen;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  cursor: default;
+}
+th,
+td {
+  font-family: monospace;
+  font-size: 1.25rem;
+  text-align: center;
+  color: forestgreen;
+  background-color: #11111123;
+  border-collapse: collapse;
+  border: 1px solid forestgreen;
+  padding: 3px;
+  white-space: nowrap;
+}
+th {
+  text-align: center;
+  font-size: 1.25rem;
+  background-color: #202020;
+}
+#tdSequencer {
+  background-color: #202020;
+}
+caption {
+  font-family: monospace;
+  font-size: 26px;
+  text-align: left;
+}
+thead {
+  font-size: 15px;
+  word-wrap: break-word;
+}
+/* unvisited link */
+a:link {
+  color: aqua;
+}
+/* visited link */
+a:visited {
+  color: aqua;
+}
+/* mouse over link */
+a:hover {
+  color: aqua;
+  border: 2px black;
+}
+/* selected link */
+a:active {
+  color: forestgreen;
+}
+input {
+  font-size: 0.9vmax;
+  background-color: #151515;
+  color: aqua;
+  font-family: monospace;
+  padding: 0.2vmax;
+  margin: 0.1vmax 0;
+  box-sizing: border-box;
+}
+code {
+  padding: 0vmin 1vmin 0vmin 1vmin;
+  margin: 0.25vmin;
+  background-color: #202020;
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: forestgreen;
+  opacity: 1; /* Firefox */
+}
+form {
+  padding: 0.1vmax;
+  margin: 0.1vmax;
+}
+small {
+  color: aqua;
+  font-size: 0.8vmax;
+}
+label {
+  padding: 0.1vmax;
+  color: aqua;
+  font-size: 1vmax;
+}
+#inputDiv {
+  border: 1px solid forestgreen;
+  padding: 0.2vmax;
+  margin: 0.2vmax;
+  background-color: #202020;
+}
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: #202020;
+  padding: 10px;
+  border-radius: 3px;
+}
+.centered-relative-container {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #202020;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+/*all elements that will not be selectable*/
+form,
+div,
+thead,
+caption,
+th,
+td,
+table,
+ul,
+li,
+h1,
+h2 .load-status-light,
+.bankButtons,
+#rootfolder,
+#bpm-counter {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+}
+
+.grid-container {
+  margin: 0px;
+  display: grid;
+  /*ensure fits to single page*/
+  height: 100%;
+  width: 100%;
+  /*set column/row height/width*/
+  grid-template-columns: 100%;
+  grid-template-rows:
+    21%
+    75%
+    max-content;
+  /*set space between grids*/
+  grid-column-gap: 1vw;
+  grid-row-gap: 1vh;
+  /*specify grid-areas*/
+  grid-template-areas:
+    "header"
+    "seq"
+    "footer";
+}
+
+/* grid-contained classes for grid-areas */
+.header {
+  grid-area: header;
+}
+.seq {
+  grid-area: seq;
+}
+.footer {
+  grid-area: footer;
+}
+
+/* grid-sub-containers */
+.grid-sub-container-seq {
+  margin: 0px;
+  display: grid;
+  /*ensure fits to single page*/
+  height: 71vh;
+  width: 98vw;
+  /*set column/row height/width*/
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows:
+    auto
+    auto;
+  /*set space between grids*/
+  grid-column-gap: 2vmin;
+  grid-row-gap: 2vmin;
+  /*specify grid-areas*/
+  grid-template-areas:
+    "seq1   seq2   seq3   seq4"
+    "seq5   seq6   seq7   seq8";
+  /* justify-content: space-evenly; */
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .grid-sub-container-seq {
+    margin: 10px;
+    display: grid;
+    /*ensure fits to single page*/
+    height: 60vh;
+    width: 95vw;
+    /*set column/row height/width*/
+    grid-template-columns: auto auto;
+    grid-template-rows:
+      auto
+      auto
+      auto
+      auto;
+    /*set space between grids*/
+    grid-column-gap: 2vmin;
+    grid-row-gap: 2vmin;
+    /*specify grid-areas*/
+    grid-template-areas:
+      "seq1   seq2"
+      "seq3   seq4"
+      "seq5   seq6"
+      "seq7   seq8";
+    /* justify-content: space-evenly; */
+  }
+}
+
+/* grid-contained classes for sub-container grid-areas */
+.seq1 {
+  grid-area: seq1;
+  text-align: center;
+}
+.seq2 {
+  grid-area: seq2;
+  text-align: center;
+}
+.seq3 {
+  grid-area: seq3;
+  text-align: center;
+}
+.seq4 {
+  grid-area: seq4;
+  text-align: center;
+}
+.seq5 {
+  grid-area: seq5;
+  text-align: center;
+}
+.seq6 {
+  grid-area: seq6;
+  text-align: center;
+}
+.seq7 {
+  grid-area: seq7;
+  text-align: center;
+}
+.seq8 {
+  grid-area: seq8;
+  text-align: center;
+}
+
+/* grid-contained grid-area sub-classes */
+/* image re-size to ensure fills maximum space within grid-area */
+img {
+  filter: brightness(100%);
+  max-width: 100%;
+  max-height: 100%;
+  display: inline-block;
+}
+
+.modal {
+  background-color: #202020 !important;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  height: max-content;
+  background-color: black;
+}
+footer a {
+  font-size: 0.9rem;
+}
+.instructions {
+  font-size: 1.25rem;
+  background-color: #151515;
+  border-radius: 3px;
+  margin: 25px 10px 0px 10px;
+  padding: 5px 10px 5px 10px;
+}
