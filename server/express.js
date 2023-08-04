@@ -8,24 +8,20 @@ require("dotenv").config({ debug: process.env.NODE_ENV === "development" });
 const { PORT, NODE_ENV, IS_HOSTED, IS_NESTED_APP } = process.env;
 const isProd = NODE_ENV === "production";
 
-const isNestedApp = IS_NESTED_APP === "true" && NODE_ENV === "production";
 const isInNodeModules = __dirname.includes("node_modules");
-const nestedAppsDirectory =
-  isInNodeModules || isNestedApp
-    ? "../node_modules/@epleywebservices/mpc-scales/_"
-    : "./";
+const isNestedApp =
+  isInNodeModules || (IS_NESTED_APP === "true" && NODE_ENV === "production");
 
 /* +++===PROJECT DIRECTORIES===+++ */
-const PUBLIC_DIR = path.join(__dirname, nestedAppsDirectory, `../public`);
-
-const APP_ROOT_DIR = isNestedApp ? nestedAppsDirectory : "../";
+const APP_ROOT_DIR = path.join(
+  __dirname,
+  isNestedApp ? "../../../../node_modules/@epleywebservices/mpc-scales" : "../"
+);
 
 console.log({
   isNestedApp,
   isInNodeModules,
-  nestedAppsDirectory,
   APP_ROOT_DIR,
-  PUBLIC_DIR,
 });
 
 /* +++===SECURITY===+++ */
@@ -59,7 +55,7 @@ if (isProd) {
 }
 
 /* +++===FAVICON===+++ */
-const faviconPath = path.join(PUBLIC_DIR, `./favicon.ico`);
+const faviconPath = path.join(APP_ROOT_DIR, "./public/favicon.ico");
 server.use(require("serve-favicon")(faviconPath));
 
 /* +++===DOWNLOADS===+++ */
@@ -84,10 +80,13 @@ const staticAssetOptions = {
   },
 };
 
-server.use("/", express.static(PUBLIC_DIR, staticAssetOptions));
+server.use(
+  "/",
+  express.static(path.join(APP_ROOT_DIR, "public"), staticAssetOptions)
+);
 
 /* +++===EJS SETUP===+++ */
-server.set("views", path.join(__dirname, APP_ROOT_DIR, "views"));
+server.set("views", path.join(APP_ROOT_DIR, "views"));
 server.set("view engine", "ejs");
 server.engine("ejs", require("ejs").__express);
 
