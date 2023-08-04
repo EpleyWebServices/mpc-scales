@@ -17,7 +17,7 @@ const APP_ROOT_DIR = path.join(
   __dirname,
   isNestedApp
     ? isProd
-      ? "../node_modules/@epleywebservices/mpc-scales"
+      ? "./node_modules/@epleywebservices/mpc-scales"
       : "../"
     : "../"
 );
