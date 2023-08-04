@@ -16,7 +16,7 @@ const path = require("path");
 
 const APP_ROOT_DIR = isNestedApp
   ? isProd
-    ? "app/node_modules/@epleywebservices/mpc-scales" // prod nested app
+    ? "../app/node_modules/@epleywebservices/mpc-scales" // prod nested app
     : path.join(__dirname, "../") // dev nested app
   : path.join(__dirname, "../"); // non-nested app
 
