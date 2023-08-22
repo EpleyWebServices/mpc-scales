@@ -24,7 +24,7 @@ Upload the files to your MPC's hard drive or a flash drive and load the programs
 
 You'll need an external midi sound module hooked up to your MPC with a midi cable. Also, make sure your midi output channel is set to the same channel as your midi device.
 
-Now, Start playing pads and your midi device should be receiving notes in the selected scale.
+Then, start playing pads and your midi device should be receiving notes in the selected scale.
 
 ## Scales player
 
