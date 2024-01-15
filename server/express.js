@@ -59,7 +59,7 @@ if (isProd) {
 }
 
 /* +++===FAVICON===+++ */
-const faviconPath = path.join(APP_ROOT_DIR, "./public/favicon.ico");
+const faviconPath = path.join(APP_ROOT_DIR, "./public/favicon.ico").replace('app/app/', 'app/');
 server.use(require("serve-favicon")(faviconPath));
 
 /* +++===DOWNLOADS===+++ */
