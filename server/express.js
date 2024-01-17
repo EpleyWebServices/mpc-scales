@@ -59,7 +59,7 @@ if (isProd) {
 }
 
 /* +++===FAVICON===+++ */
-const faviconPath = path.join(APP_ROOT_DIR, "./public/favicon.ico").replace('app/app/', 'app/');
+const faviconPath = path.join(APP_ROOT_DIR, "./public/favicon.ico").replace('app/app/', '');
 console.log('faviconPath: ', faviconPath);
 server.use(require("serve-favicon")(faviconPath));
 
